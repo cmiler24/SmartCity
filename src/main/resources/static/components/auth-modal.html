@@ -1,0 +1,55 @@
+<div id="authModal" class="auth-modal" aria-hidden="true">
+    <div class="auth-modal-content" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+
+        <button class="modal-close" type="button" data-close-auth aria-label="Close">
+            &times;
+        </button>
+
+        <h2 id="authTitle">Welcome to SmartCity Hub</h2>
+        <p class="auth-subtitle">Log in or create an account to access citizen features.</p>
+
+        <section id="loginPanel" class="auth-panel">
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail">Email</label>
+                <input id="loginEmail" type="email" required>
+
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" type="password" required>
+
+                <button class="auth-submit" type="submit">Log In</button>
+            </form>
+
+            <p class="auth-switch">
+                New to SmartCity Hub?
+                <button type="button" class="auth-text-button" data-auth-tab="signup">
+                    Create an account
+                </button>
+            </p>
+        </section>
+
+        <section id="signupPanel" class="auth-panel" hidden>
+            <form id="signupForm" class="auth-form">
+                <label for="signupFirstName">First Name</label>
+                <input id="signupFirstName" type="text" required>
+
+                <label for="signupEmail">Email</label>
+                <input id="signupEmail" type="email" required>
+
+                <label for="signupPassword">Password</label>
+                <input id="signupPassword" type="password" required>
+
+                <label for="confirmPassword">Confirm Password</label>
+                <input id="confirmPassword" type="password" required>
+
+                <button class="auth-submit" type="submit">Create Account</button>
+            </form>
+
+            <p class="auth-switch">
+                Already have an account?
+                <button type="button" class="auth-text-button" data-auth-tab="login">
+                    Log in
+                </button>
+            </p>
+        </section>
+    </div>
+</div>

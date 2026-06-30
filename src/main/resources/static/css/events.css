@@ -1,0 +1,268 @@
+.events-hero {
+    padding: 55px 20px;
+    text-align: center;
+    background-color: white;
+}
+
+.events-hero h1 {
+    margin: 0 0 12px;
+    color: #1f4e79;
+    font-size: 34px;
+}
+
+.events-hero p {
+    margin: 0;
+    font-size: 17px;
+    color: #555;
+}
+
+.events-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 35px 20px 55px;
+}
+
+.filter-panel {
+    margin-bottom: 35px;
+    padding: 22px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.filter-title-row h2 {
+    margin: 0;
+    color: #1f4e79;
+    font-size: 20px;
+}
+
+.clear-button {
+    border: none;
+    background: none;
+    color: #1f4e79;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filter-controls {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c7d0db;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 14px;
+}
+
+.events-area {
+    width: 100%;
+}
+
+.clear-button {
+    border: none;
+    background: none;
+    color: #1f4e79;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filter-panel label {
+    display: block;
+    margin: 16px 0 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.filter-panel select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c7d0db;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 14px;
+}
+
+.events-area {
+    flex: 1;
+}
+
+.events-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.events-heading h2 {
+    margin: 0;
+    color: #1f4e79;
+    font-size: 25px;
+}
+
+.events-heading p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 335px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.event-category,
+.event-cost {
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.environment {
+    background-color: #2e7d32;
+}
+
+.sports {
+    background-color: #1565c0;
+}
+
+.education {
+    background-color: #7b1fa2;
+}
+
+.safety {
+    background-color: #b42318;
+}
+
+.cultural {
+    background-color: #b85c00;
+}
+
+.service {
+    background-color: #00796b;
+}
+
+.event-cost {
+    background-color: #1f4e79;
+}
+
+.event-cost.paid {
+    background-color: #7a4b00;
+}
+
+.event-card h3 {
+    margin: 18px 0 10px;
+    color: #1f4e79;
+    font-size: 19px;
+}
+
+.event-description {
+    margin: 0 0 15px;
+    line-height: 1.5;
+    color: #444;
+}
+
+.event-details {
+    margin-top: auto;
+    font-size: 14px;
+    color: #555;
+}
+
+.event-details p {
+    margin: 7px 0;
+}
+
+.register-button {
+    margin-top: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1f4e79;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background-color: #163a59;
+}
+
+.no-results {
+    display: none;
+    margin-top: 30px;
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+}
+
+.active-link {
+    text-decoration: underline !important;
+}
+
+@media (max-width: 950px) {
+    .events-grid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .events-content {
+        flex-direction: column;
+    }
+
+    .filter-panel {
+        width: 100%;
+    }
+
+    .events-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}

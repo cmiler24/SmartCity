@@ -1,0 +1,138 @@
+.header-account {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+}
+
+.header-auth-button {
+    padding: 7px 11px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.header-auth-button:hover {
+    background-color: white;
+    color: #1f4e79;
+}
+
+.auth-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.auth-modal.is-open {
+    display: flex;
+}
+
+.auth-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.auth-modal-content h2 {
+    margin: 0 0 8px;
+    color: #1f4e79;
+}
+
+.auth-subtitle {
+    margin: 0 0 22px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background: none;
+    color: #555;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 22px;
+    border-bottom: 1px solid #d6dce4;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-tab.active {
+    border-bottom-color: #1f4e79;
+    color: #1f4e79;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    margin: 12px 0 6px;
+    font-weight: bold;
+}
+
+.auth-form input {
+    padding: 10px;
+    border: 1px solid #c7d0db;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.auth-submit {
+    margin-top: 22px;
+    padding: 11px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1f4e79;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-submit:hover {
+    background-color: #163a59;
+}
+
+.auth-switch {
+    margin: 18px 0 0;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+}
+
+.auth-text-button {
+    border: none;
+    background: none;
+    color: #1f4e79;
+    font-weight: bold;
+    cursor: pointer;
+}

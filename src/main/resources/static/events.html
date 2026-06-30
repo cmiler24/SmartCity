@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Events & Programs | SmartCity Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/events.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main>
+    <section class="events-hero">
+        <h1>Community Events & Programs</h1>
+        <p>Explore local activities, volunteer opportunities, public programs, and city events.</p>
+    </section>
+
+    <section class="events-content">
+        <section class="filter-panel">
+            <div class="filter-title-row">
+                <h2>Filter Events</h2>
+                <button id="clearFiltersBtn" class="clear-button">Clear</button>
+            </div>
+
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="categoryFilter">Category</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="community-service">Community Service</option>
+                        <option value="sports">Sports</option>
+                        <option value="public-safety">Public Safety</option>
+                        <option value="education">Education</option>
+                        <option value="environment">Environment</option>
+                        <option value="cultural-activities">Cultural Activities</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="locationFilter">Location</label>
+                    <select id="locationFilter">
+                        <option value="all">All Locations</option>
+                        <option value="downtown">Downtown</option>
+                        <option value="city-park">City Park</option>
+                        <option value="community-center">Community Center</option>
+                        <option value="library">City Library</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="costFilter">Cost</label>
+                    <select id="costFilter">
+                        <option value="all">Free or Paid</option>
+                        <option value="free">Free</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="typeFilter">Program Type</label>
+                    <select id="typeFilter">
+                        <option value="all">All Types</option>
+                        <option value="event">Event</option>
+                        <option value="volunteer-program">Volunteer Program</option>
+                        <option value="local-initiative">Local Initiative</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sortFilter">Sort By</label>
+                    <select id="sortFilter">
+                        <option value="date">Upcoming Date</option>
+                        <option value="popularity">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="events-area">
+            <div class="events-heading">
+                <h2>Upcoming Events</h2>
+                <p id="eventCount">6 events found</p>
+            </div>
+
+            <div id="eventsGrid" class="events-grid">
+
+                <article class="event-card"
+                         data-category="environment"
+                         data-location="city-park"
+                         data-cost="free"
+                         data-type="volunteer-program"
+                         data-date="2026-07-03"
+                         data-popularity="95">
+
+                    <div class="event-card-top">
+                        <span class="event-category environment">Environment</span>
+                        <span class="event-cost">Free</span>
+                    </div>
+
+                    <h3>Community Park Cleanup</h3>
+                    <p class="event-description">
+                        Help keep City Park clean by joining local volunteers for a morning cleanup.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 3, 2026</p>
+                        <p><strong>Location:</strong> City Park</p>
+                        <p><strong>Type:</strong> Volunteer Program</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+                <article class="event-card"
+                         data-category="sports"
+                         data-location="community-center"
+                         data-cost="paid"
+                         data-type="event"
+                         data-date="2026-07-06"
+                         data-popularity="88">
+
+                    <div class="event-card-top">
+                        <span class="event-category sports">Sports</span>
+                        <span class="event-cost paid">Paid</span>
+                    </div>
+
+                    <h3>Summer Basketball Tournament</h3>
+                    <p class="event-description">
+                        Join a friendly basketball tournament for local players and community teams.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 6, 2026</p>
+                        <p><strong>Location:</strong> Community Center</p>
+                        <p><strong>Type:</strong> Event</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+                <article class="event-card"
+                         data-category="education"
+                         data-location="library"
+                         data-cost="free"
+                         data-type="event"
+                         data-date="2026-07-10"
+                         data-popularity="72">
+
+                    <div class="event-card-top">
+                        <span class="event-category education">Education</span>
+                        <span class="event-cost">Free</span>
+                    </div>
+
+                    <h3>Resume and Job Search Workshop</h3>
+                    <p class="event-description">
+                        Learn basic resume writing, interview preparation, and job search skills.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 10, 2026</p>
+                        <p><strong>Location:</strong> City Library</p>
+                        <p><strong>Type:</strong> Event</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+                <article class="event-card"
+                         data-category="public-safety"
+                         data-location="downtown"
+                         data-cost="free"
+                         data-type="local-initiative"
+                         data-date="2026-07-13"
+                         data-popularity="80">
+
+                    <div class="event-card-top">
+                        <span class="event-category safety">Public Safety</span>
+                        <span class="event-cost">Free</span>
+                    </div>
+
+                    <h3>Neighborhood Safety Meeting</h3>
+                    <p class="event-description">
+                        Meet with city safety staff and learn more about neighborhood safety resources.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 13, 2026</p>
+                        <p><strong>Location:</strong> Downtown</p>
+                        <p><strong>Type:</strong> Local Initiative</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+                <article class="event-card"
+                         data-category="cultural-activities"
+                         data-location="downtown"
+                         data-cost="free"
+                         data-type="event"
+                         data-date="2026-07-18"
+                         data-popularity="91">
+
+                    <div class="event-card-top">
+                        <span class="event-category cultural">Cultural Activities</span>
+                        <span class="event-cost">Free</span>
+                    </div>
+
+                    <h3>Downtown Cultural Festival</h3>
+                    <p class="event-description">
+                        Enjoy local food, music, art, and cultural performances in downtown.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 18, 2026</p>
+                        <p><strong>Location:</strong> Downtown</p>
+                        <p><strong>Type:</strong> Event</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+                <article class="event-card"
+                         data-category="community-service"
+                         data-location="community-center"
+                         data-cost="free"
+                         data-type="volunteer-program"
+                         data-date="2026-07-22"
+                         data-popularity="77">
+
+                    <div class="event-card-top">
+                        <span class="event-category service">Community Service</span>
+                        <span class="event-cost">Free</span>
+                    </div>
+
+                    <h3>Food Drive Volunteer Day</h3>
+                    <p class="event-description">
+                        Help organize and distribute food donations for local families in need.
+                    </p>
+
+                    <div class="event-details">
+                        <p><strong>Date:</strong> July 22, 2026</p>
+                        <p><strong>Location:</strong> Community Center</p>
+                        <p><strong>Type:</strong> Volunteer Program</p>
+                    </div>
+
+                    <button class="register-button">View Details</button>
+                </article>
+
+            </div>
+
+            <p id="noResults" class="no-results">No events match your selected filters.</p>
+        </section>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 SmartCity Hub</p>
+</footer>
+
+<script src="/js/header.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/auth-modal.js"></script>
+<script src="/js/events.js"></script>
+</body>
+</html>

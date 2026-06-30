@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    color: #222;
+}
+
+.hero {
+    text-align: center;
+    padding: 70px 20px;
+    background-color: white;
+}
+
+.hero h2 {
+    font-size: 32px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+button {
+    background-color: #1f4e79;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    /*background-color: #163a59;*/
+    /*color: white !important;*/
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: white;
+    width: 260px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: black !important;
+}
+
+.card:hover {
+    background-color: #163a59;
+    color: white !important;
+}
+
+/* Alerts and announcements */
+.alerts-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 45px 20px 20px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    color: #1f4e79;
+    font-size: 25px;
+}
+
+.section-heading a {
+    color: #1f4e79;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.section-heading a:hover {
+    /*text-decoration: underline;*/
+}
+
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.alert-item {
+    padding: 20px;
+    background-color: white;
+    border-left: 5px solid #1f4e79;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.emergency-alert {
+    border-left-color: #b42318;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.alert-tag {
+    padding: 5px 9px;
+    border-radius: 4px;
+    background-color: #b42318;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.announcement-tag {
+    background-color: #1f4e79;
+}
+
+.alert-department {
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.alert-item h3 {
+    margin: 0 0 10px;
+    color: #1f4e79;
+    font-size: 19px;
+}
+
+.alert-item p {
+    margin: 0 0 12px;
+    line-height: 1.5;
+}
+
+.alert-date {
+    color: #666;
+    font-size: 13px;
+}
