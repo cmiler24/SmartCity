@@ -1,18 +1,20 @@
 package com.cse460.smartcityhubweb.controllers;
 
+import com.cse460.smartcityhubweb.dto.LoginRequest;
 import com.cse460.smartcityhubweb.dto.SignupRequest;
 import com.cse460.smartcityhubweb.model.User;
 import com.cse460.smartcityhubweb.repository.UserRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.persistence.Entity;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.*;
 
 //import java.util.Map;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-//@RestController
+@RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -22,19 +24,41 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
+    // test endpoint to get all users
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupRequest request) {
+    public Object signup(@RequestBody SignupRequest request) {
 
         User user = new User(
                 UUID.randomUUID().toString(),
                 request.getFirstName(),
                 request.getEmail(),
-                new ArrayList<String>(java.util.Arrays.asList("Citizen")),
+                new ArrayList<String>(java.util.Arrays.asList("Citizen, Guest, CITY_ADMINISTRATOR, City Manager")),
                 request.getPassword()
         );
 
         userRepository.save(user);
 
-        return "Account created successfully.";
+        System.out.println("Signup Successful");
+        return Map.of("name", user.getName(), "roles", user.getRoles().toString());
     }
+
+    @PostMapping("/login")
+    public Object login(@RequestBody LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail());
+        if (user != null && user.getPassword().equals(request.getPassword())) {
+            System.out.println("Login Successful");
+            return Map.of("name", user.getName(),
+                    "roles", user.getRoles().toString());
+        } else {
+            System.out.println("Unable to login");
+            return null;
+        }
+    }
+
+
 }

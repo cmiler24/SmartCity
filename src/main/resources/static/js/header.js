@@ -31,16 +31,17 @@ async function loadHeader() {
 
 function updateWelcomeName() {
     const welcomeName = document.getElementById("welcomeName");
-    const savedUser = localStorage.getItem("smartCityUser");
+    const currentUser = localStorage.getItem("currentUser");
 
-    if (!welcomeName || !savedUser) {
+    if (!welcomeName || !currentUser) {
         return;
     }
 
-    const user = JSON.parse(savedUser);
+    const user = JSON.parse(currentUser);
 
-    if (user.firstName) {
-        welcomeName.textContent = user.firstName;
+    if (user.name) {
+        welcomeName.textContent = user.name;
+        document.getElementById("login").innerText = 'Logout';
     }
 }
 
@@ -55,7 +56,7 @@ function highlightCurrentPage() {
 
 document.addEventListener("DOMContentLoaded", loadHeader);
 
-// document.getElementById("loginBtn").addEventListener("click", () => {
+// document.getElementById("login").addEventListener("click", () => {
 //     console.log('clicking')
 //     openAuthModal();
 // });

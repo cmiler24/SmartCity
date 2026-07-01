@@ -1,3 +1,13 @@
+function loginBtnClick() {
+    if (document.getElementById("login").innerText === "Login") {
+        openAuthModal();
+    } else {
+        localStorage.clear();
+        alert("You have been logged out.");
+        window.location.reload();
+    }
+}
+
 function openAuthModal() {
     const authModal = document.getElementById("authModal");
 
@@ -98,13 +108,18 @@ document.addEventListener("submit", async (event) => {
 
             const data = await response.json();
 
-            if (!response.ok) {
-                alert(data.message || "Could not create account. Please try again later");
+            if (!data) {
+                alert("Could not create account. Please try again later");
                 return;
+            } else {
+                // set currentUser in local storage
+                localStorage.setItem("currentUser", JSON.stringify(data));
+                alert("User account successfully created.");
             }
 
             closeAuthModal();
             event.target.reset();
+            window.location.reload();
         } catch (error) {
             console.error("Error during signup:", error);
             alert("The server could not be reached");
@@ -115,17 +130,35 @@ document.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const email = document.getElementById("loginEmail").value.trim();
-        const savedUser = localStorage.getItem("smartCityUser");
+        const password = document.getElementById("loginPassword").value.trim();
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-        let firstName = "Citizen";
+            const data = await response.json();
 
-        if (savedUser) {
-            firstName = JSON.parse(savedUser).firstName;
-        } else {
-            firstName = email.split("@")[0];
+            if (!data) {
+                alert("Could not login. Please try again later");
+                return;
+            } else {
+                localStorage.setItem("currentUser", JSON.stringify(data));
+                alert("User logged in successfully.");
+            }
+        } catch (error) {
+            console.error("Error during signup:", error);
+            alert("The server could not be reached");
         }
 
         closeAuthModal();
         event.target.reset();
+        window.location.reload();
     }
 });

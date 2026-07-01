@@ -16,7 +16,7 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private String passwordHash;
+    private String password;
 
 //    @ElementCollection
     private List<String> roles;
@@ -25,12 +25,12 @@ public class User {
     public User() {
     }
 
-    public User(String id, String name, String email, List<String> roles, String passwordHash) {
+    public User(String id, String name, String email, List<String> roles, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.roles = new ArrayList<>(roles);
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     // Getters and Setters
@@ -70,7 +70,11 @@ public class User {
         this.roles = new ArrayList<>(roles);
     }
 
-    public void setPassword(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
