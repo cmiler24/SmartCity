@@ -68,7 +68,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-document.addEventListener("submit", (event) => {
+document.addEventListener("submit", async (event) => {
     if (event.target.id === "signupForm") {
         event.preventDefault();
 
@@ -82,14 +82,33 @@ document.addEventListener("submit", (event) => {
             return;
         }
 
-        localStorage.setItem(
-            "smartCityUser",
-            JSON.stringify({ firstName, email })
-        );
+        // send the signup data to your server for processing.
+        try {
+            const response = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    email: email,
+                    password: password
+                })
+            });
 
-        document.dispatchEvent(new Event("smartcity:user-changed"));
-        closeAuthModal();
-        event.target.reset();
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || "Could not create account. Please try again later");
+                return;
+            }
+
+            closeAuthModal();
+            event.target.reset();
+        } catch (error) {
+            console.error("Error during signup:", error);
+            alert("The server could not be reached");
+        }
     }
 
     if (event.target.id === "loginForm") {
@@ -106,12 +125,6 @@ document.addEventListener("submit", (event) => {
             firstName = email.split("@")[0];
         }
 
-        localStorage.setItem(
-            "smartCityUser",
-            JSON.stringify({ firstName, email })
-        );
-
-        document.dispatchEvent(new Event("smartcity:user-changed"));
         closeAuthModal();
         event.target.reset();
     }
