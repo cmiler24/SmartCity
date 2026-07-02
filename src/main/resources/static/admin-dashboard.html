@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Administrator Dashboard | SmartCity Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main class="admin-dashboard">
+    <section class="dashboard-cards">
+        <button class="dashboard-card" onclick="scrollToSection('eventsSection')">
+            <h3>Manage Events</h3>
+            <p>Create, view, and delete community events</p>
+        </button>
+
+        <button class="dashboard-card" onclick="scrollToSection('announcementsSection')">
+            <h3>Manage Announcements</h3>
+            <p>Create, view, and delete city announcements</p>
+        </button>
+    </section>
+
+    <div class="admin-container">
+        <!-- Events Section -->
+        <section class="admin-section" id="eventsSection">
+            <div class="section-header">
+                <h2>Manage Events</h2>
+                <div class="section-header-buttons">
+                    <button class="btn-primary" onclick="openCreateEventModal()">+ Create Event</button>
+                    <button class="btn-danger-outline" onclick="openDeleteEventModal()">Delete Event(s)</button>
+                </div>
+            </div>
+
+            <div class="admin-list">
+                <div id="eventsList" class="items-list">
+                </div>
+            </div>
+        </section>
+
+        <!-- Announcements Section -->
+        <section class="admin-section" id="announcementsSection">
+            <div class="section-header">
+                <h2>Manage Announcements</h2>
+                <div class="section-header-buttons">
+                    <button class="btn-primary" onclick="openCreateAnnouncementModal()">+ Create Announcement</button>
+                    <button class="btn-danger-outline" onclick="openDeleteAnnouncementModal()">Delete Announcement(s)</button>
+                </div>
+            </div>
+
+            <div class="admin-list">
+                <div id="announcementsList" class="items-list">
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Create Event Modal -->
+<div id="createEventModal" class="modal" onclick="closeEventModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create New Event</h2>
+            <button class="modal-close" onclick="closeCreateEventModal()">&times;</button>
+        </div>
+
+        <form id="createEventForm" class="modal-form">
+            <div class="form-group">
+                <label for="eventTitle">Title</label>
+                <input type="text" id="eventTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventType">Category</label>
+                <select id="eventType" required>
+                    <option value="">Select a category</option>
+                    <option value="Community Service">Community Service</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Public Safety">Public Safety</option>
+                    <option value="Education">Education</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Cultural Activities">Cultural Activities</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="eventLocation">Location</label>
+                <input type="text" id="eventLocation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDate">Date</label>
+                <input type="date" id="eventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventFree">Cost</label>
+                <select id="eventFree" required>
+                    <option value="true">Free</option>
+                    <option value="false">Paid</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeCreateEventModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Create Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Create Announcement Modal -->
+<div id="createAnnouncementModal" class="modal" onclick="closeAnnouncementModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create New Announcement</h2>
+            <button class="modal-close" onclick="closeCreateAnnouncementModal()">&times;</button>
+        </div>
+
+        <form id="createAnnouncementForm" class="modal-form">
+            <div class="form-group">
+                <label for="announcementType">Type</label>
+                <select id="announcementType" required>
+                    <option value="">Select a type</option>
+                    <option value="Emergency Alert">Emergency Alert</option>
+                    <option value="Announcement">Announcement</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="announcementDepartment">Department</label>
+                <input type="text" id="announcementDepartment" required>
+            </div>
+
+            <div class="form-group">
+                <label for="announcementTitle">Title</label>
+                <input type="text" id="announcementTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="announcementDescription">Description</label>
+                <textarea id="announcementDescription" rows="4" required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeCreateAnnouncementModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Create Announcement</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Event Modal -->
+<div id="editEventModal" class="modal" onclick="closeEditEventModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Edit Event</h2>
+            <button class="modal-close" onclick="closeEditEventModal()">&times;</button>
+        </div>
+
+        <form id="editEventForm" class="modal-form">
+            <div class="form-group">
+                <label for="editEventTitle">Title</label>
+                <input type="text" id="editEventTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventType">Category</label>
+                <select id="editEventType" required>
+                    <option value="">Select a category</option>
+                    <option value="Community Service">Community Service</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Public Safety">Public Safety</option>
+                    <option value="Education">Education</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Cultural Activities">Cultural Activities</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventLocation">Location</label>
+                <input type="text" id="editEventLocation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventDate">Date</label>
+                <input type="date" id="editEventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editEventFree">Cost</label>
+                <select id="editEventFree" required>
+                    <option value="true">Free</option>
+                    <option value="false">Paid</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeEditEventModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Update Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Announcement Modal -->
+<div id="editAnnouncementModal" class="modal" onclick="closeEditAnnouncementModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Edit Announcement</h2>
+            <button class="modal-close" onclick="closeEditAnnouncementModal()">&times;</button>
+        </div>
+
+        <form id="editAnnouncementForm" class="modal-form">
+            <div class="form-group">
+                <label for="editAnnouncementType">Type</label>
+                <select id="editAnnouncementType" required>
+                    <option value="">Select a type</option>
+                    <option value="Emergency Alert">Emergency Alert</option>
+                    <option value="Announcement">Announcement</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="editAnnouncementDepartment">Department</label>
+                <input type="text" id="editAnnouncementDepartment" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editAnnouncementTitle">Title</label>
+                <input type="text" id="editAnnouncementTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editAnnouncementDescription">Description</label>
+                <textarea id="editAnnouncementDescription" rows="4" required></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeEditAnnouncementModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Update Announcement</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Selection Modal -->
+<div id="deleteSelectModal" class="modal" onclick="closeDeleteSelectModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="deleteSelectTitle">Select Items to Delete</h2>
+            <button class="modal-close" onclick="closeDeleteSelectModal()">&times;</button>
+        </div>
+
+        <div class="modal-body delete-select-body">
+            <div id="deleteItemsList" class="delete-items-list">
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-secondary" onclick="closeDeleteSelectModal()">Cancel</button>
+            <button type="button" id="confirmDeleteSelectedBtn" class="btn-danger">Delete Selected</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/header.js"></script>
+<script src="/js/auth-modal.js"></script>
+<script src="/js/admin-dashboard.js"></script>
+</body>
+</html>
+
+
