@@ -52,11 +52,11 @@ public class AuthController {
         User user = userRepository.findByEmail(request.getEmail());
         if (user != null && user.getPassword().equals(request.getPassword())) {
             System.out.println("Login Successful");
-            return Map.of("name", user.getName(),
+            return Map.of( "success", true, "name", user.getName(),
                     "roles", user.getRoles().toString());
         } else {
-            System.out.println("Unable to login");
-            return null;
+            System.out.println("Wrong email or password. Please try again");
+            return Map.of("success", false);
         }
     }
 

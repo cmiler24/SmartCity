@@ -1,7 +1,9 @@
 package com.cse460.smartcityhubweb.mockdata;
 
+import com.cse460.smartcityhubweb.model.Announcement;
 import com.cse460.smartcityhubweb.model.Event;
 import com.cse460.smartcityhubweb.model.User;
+import com.cse460.smartcityhubweb.repository.AnnouncementRepository;
 import com.cse460.smartcityhubweb.repository.EventRepository;
 import com.cse460.smartcityhubweb.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -16,16 +18,19 @@ public class DemoDataLoader {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final AnnouncementRepository announcementRepository;
 
-    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository) {
+    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository, AnnouncementRepository announcementRepository) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.announcementRepository = announcementRepository;
     }
 
     @PostConstruct
     public void loadDemoData() {
         loadDemoUsers();
         loadDemoEvents();
+        loadDemoAnnouncements();
     }
 
     private void loadDemoUsers() {
@@ -87,71 +92,116 @@ public class DemoDataLoader {
         Event[] demoEvents = {
                 new Event(
                         "event-001",
-                        "Community Food Drive",
-                        "Community Service",
-                        "Community Center",
-                        LocalDate.now().plusDays(3),
+                        "Community Park Cleanup",
+                        "Environment",
+                        "City Park",
+                        LocalDate.of(2026, 7, 3),
                         true,
-                        "Volunteer Program",
-                        80
+                        95
                 ),
 
                 new Event(
                         "event-002",
                         "Summer Basketball Tournament",
                         "Sports",
-                        "City Park",
-                        LocalDate.now().plusDays(6),
+                        "Community Center",
+                        LocalDate.of(2026, 7, 6),
                         false,
-                        "Event",
-                        92
+                        88
                 ),
 
                 new Event(
                         "event-003",
-                        "Neighborhood Safety Meeting",
-                        "Public Safety",
-                        "Downtown",
-                        LocalDate.now().plusDays(9),
+                        "Resume and Job Search Workshop",
+                        "Education",
+                        "City Library",
+                        LocalDate.of(2026, 7, 10),
                         true,
-                        "Local Initiative",
-                        70
+                        72
                 ),
 
                 new Event(
                         "event-004",
-                        "Resume and Job Search Workshop",
-                        "Education",
-                        "City Library",
-                        LocalDate.now().plusDays(12),
+                        "Neighborhood Safety Meeting",
+                        "Public Safety",
+                        "Downtown",
+                        LocalDate.of(2026, 7, 13),
                         true,
-                        "Event",
-                        75
+                        80
                 ),
 
                 new Event(
                         "event-005",
-                        "Community Park Cleanup",
-                        "Environment",
-                        "City Park",
-                        LocalDate.now().plusDays(15),
+                        "Downtown Cultural Festival",
+                        "Cultural Activities",
+                        "Downtown",
+                        LocalDate.of(2026, 7, 18),
                         true,
-                        "Volunteer Program",
-                        95
+                        91
                 ),
 
                 new Event(
                         "event-006",
-                        "Downtown Cultural Festival",
-                        "Cultural Activities",
-                        "Downtown",
-                        LocalDate.now().plusDays(18),
+                        "Food Drive Volunteer Day",
+                        "Community Service",
+                        "Community Center",
+                        LocalDate.of(2026, 7, 22),
                         true,
-                        "Event",
-                        88
+                        77
                 )
         };
 
         eventRepository.saveAll(Arrays.asList(demoEvents));
+    }
+
+    private void loadDemoAnnouncements() {
+        Announcement[] demoAnnouncements = {
+                new Announcement(
+                        "announcement-001",
+                        "Emergency Alert",
+                        "Public Safety Department",
+                        "Heat Advisory This Weekend",
+                        "High temperatures are expected this weekend. Citizens are encouraged to stay hydrated and avoid spending too much time outside.",
+                        LocalDate.of(2026, 6, 29)
+                ),
+
+                new Announcement(
+                        "announcement-002",
+                        "Announcement",
+                        "Public Works Department",
+                        "Road Maintenance on Main Street",
+                        "Road work will take place on Main Street from July 1 through July 3. Drivers should expect delays and use alternate routes when possible.",
+                        LocalDate.of(2026, 6, 28)
+                ),
+
+                new Announcement(
+                        "announcement-003",
+                        "Announcement",
+                        "Parks and Recreation Department",
+                        "Community Pool Summer Hours",
+                        "The community pool will have extended hours during the month of July. Visit the city events page for the updated schedule.",
+                        LocalDate.of(2026, 6, 27)
+                ),
+
+                new Announcement(
+                        "announcement-004",
+                        "Emergency Alert",
+                        "Public Safety Department",
+                        "Severe Weather Warning",
+                        "Severe thunderstorms are expected this afternoon. Residents should seek shelter and avoid outdoor activities until the warning is lifted.",
+                        LocalDate.of(2026, 7, 1)
+                ),
+
+                new Announcement(
+                        "announcement-005",
+                        "Announcement",
+                        "City Planning Department",
+                        "New Community Center Grand Opening",
+                        "Join us for the grand opening of the new downtown community center. Free activities and refreshments will be available for all family members.",
+                        LocalDate.of(2026, 6, 26)
+                )
+        };
+
+        announcementRepository.saveAll(Arrays.asList(demoAnnouncements));
     }
 }

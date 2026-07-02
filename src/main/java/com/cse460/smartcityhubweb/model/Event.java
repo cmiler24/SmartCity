@@ -9,12 +9,10 @@ import java.time.LocalDate;
 @Entity
 //@Table(name = "events")
 public class Event {
-
     @Id
     private String id;
 
     private String title;
-    private String category;
     private String location;
     private LocalDate eventDate;
     private boolean free;
@@ -27,16 +25,14 @@ public class Event {
     public Event(
             String id,
             String title,
-            String category,
+            String eventType,
             String location,
             LocalDate eventDate,
             boolean free,
-            String eventType,
             int popularity
     ) {
         this.id = id;
         this.title = title;
-        this.category = category;
         this.location = location;
         this.eventDate = eventDate;
         this.free = free;
@@ -50,10 +46,6 @@ public class Event {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public String getLocation() {
@@ -84,10 +76,6 @@ public class Event {
         this.title = title;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public void setLocation(String location) {
         this.location = location;
     }
@@ -100,7 +88,7 @@ public class Event {
         this.free = free;
     }
 
-    public void setProgramType(String eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 

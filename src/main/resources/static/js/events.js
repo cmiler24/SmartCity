@@ -1,44 +1,83 @@
 const categoryFilter = document.getElementById("categoryFilter");
-const locationFilter = document.getElementById("locationFilter");
 const costFilter = document.getElementById("costFilter");
-const typeFilter = document.getElementById("typeFilter");
-const sortFilter = document.getElementById("sortFilter");
 const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
 const eventsGrid = document.getElementById("eventsGrid");
-const eventCards = [...document.querySelectorAll(".event-card")];
 const eventCount = document.getElementById("eventCount");
 const noResults = document.getElementById("noResults");
 
-function filterAndSortEvents() {
+let eventCards = [];
+
+async function loadEvents() {
+    try {
+        const response = await fetch("/api/events");
+        const events = await response.json();
+
+        eventsGrid.innerHTML = "";
+        eventCards = [];
+
+        events.forEach((event) => {
+            const eventCard = createEventCard(event);
+            eventsGrid.appendChild(eventCard);
+            eventCards.push(eventCard);
+        });
+
+        filterEvents();
+    } catch (error) {
+        console.error("Error loading events:", error);
+        eventsGrid.innerHTML = "<p>Error loading events. Please try again later.</p>";
+    }
+}
+
+function createEventCard(event) {
+    const article = document.createElement("article");
+    article.className = "event-card";
+    article.setAttribute("data-category", event.eventType.toLowerCase().replace(/\s+/g, "-"));
+    article.setAttribute("data-location", event.location.toLowerCase().replace(/\s+/g, "-"));
+    article.setAttribute("data-cost", event.free ? "free" : "paid");
+
+    const costText = event.free ? "Free" : "Paid";
+    const dateObj = new Date(event.eventDate);
+    const formattedDate = dateObj.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+
+    article.innerHTML = `
+        <h3>${event.title}</h3>
+        <p class="event-description">
+            ${event.title} event description
+        </p>
+
+        <div class="event-details">
+            <p><strong>Category:</strong> ${event.eventType}</p>
+            <p><strong>Cost:</strong> ${costText}</p>
+            <p><strong>Date:</strong> ${formattedDate}</p>
+            <p><strong>Location:</strong> ${event.location}</p>
+        </div>
+
+        <button class="register-button">Register</button>
+    `;
+
+    const registerButton = article.querySelector(".register-button");
+    registerButton.addEventListener("click", handleRegisterClick);
+
+    return article;
+}
+
+function filterEvents() {
     const category = categoryFilter.value;
-    const location = locationFilter.value;
     const cost = costFilter.value;
-    const type = typeFilter.value;
-    const sortBy = sortFilter.value;
 
     let visibleEvents = eventCards.filter((eventCard) => {
         const matchesCategory =
             category === "all" || eventCard.dataset.category === category;
 
-        const matchesLocation =
-            location === "all" || eventCard.dataset.location === location;
-
         const matchesCost =
             cost === "all" || eventCard.dataset.cost === cost;
 
-        const matchesType =
-            type === "all" || eventCard.dataset.type === type;
-
-        return matchesCategory && matchesLocation && matchesCost && matchesType;
-    });
-
-    visibleEvents.sort((firstEvent, secondEvent) => {
-        if (sortBy === "popularity") {
-            return Number(secondEvent.dataset.popularity) - Number(firstEvent.dataset.popularity);
-        }
-
-        return new Date(firstEvent.dataset.date) - new Date(secondEvent.dataset.date);
+        return matchesCategory && matchesCost;
     });
 
     eventCards.forEach((eventCard) => {
@@ -47,7 +86,6 @@ function filterAndSortEvents() {
 
     visibleEvents.forEach((eventCard) => {
         eventCard.style.display = "flex";
-        eventsGrid.appendChild(eventCard);
     });
 
     eventCount.textContent = `${visibleEvents.length} event${visibleEvents.length === 1 ? "" : "s"} found`;
@@ -56,17 +94,26 @@ function filterAndSortEvents() {
 
 function clearFilters() {
     categoryFilter.value = "all";
-    locationFilter.value = "all";
     costFilter.value = "all";
-    typeFilter.value = "all";
-    sortFilter.value = "date";
 
-    filterAndSortEvents();
+    filterEvents();
 }
 
-categoryFilter.addEventListener("change", filterAndSortEvents);
-locationFilter.addEventListener("change", filterAndSortEvents);
-costFilter.addEventListener("change", filterAndSortEvents);
-typeFilter.addEventListener("change", filterAndSortEvents);
-sortFilter.addEventListener("change", filterAndSortEvents);
+function handleRegisterClick() {
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (currentUser) {
+        // TODO: Complete event registration functionality for logged-in users
+        console.log("TODO: Handle event registration for logged-in user");
+        return;
+    }
+
+    openAuthModal();
+}
+
+categoryFilter.addEventListener("change", filterEvents);
+costFilter.addEventListener("change", filterEvents);
 clearFiltersBtn.addEventListener("click", clearFilters);
+
+// Load events when page loads
+loadEvents();

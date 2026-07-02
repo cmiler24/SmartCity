@@ -145,16 +145,16 @@ document.addEventListener("submit", async (event) => {
 
             const data = await response.json();
 
-            if (!data) {
-                alert("Could not login. Please try again later");
+            if (!data.success) {
+                alert("Incorrect username or password. Please try again later");
                 return;
             } else {
                 localStorage.setItem("currentUser", JSON.stringify(data));
                 alert("User logged in successfully.");
             }
         } catch (error) {
-            console.error("Error during signup:", error);
-            alert("The server could not be reached");
+            console.error("Error during login:", error);
+            alert("The server could not be reached: " + error);
         }
 
         closeAuthModal();
