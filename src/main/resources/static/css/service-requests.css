@@ -1,0 +1,200 @@
+.service-request-hero {
+    padding: 55px 20px;
+    text-align: center;
+    background-color: white;
+}
+
+.service-request-hero h1 {
+    margin: 0 0 12px;
+    color: #1f4e79;
+    font-size: 34px;
+}
+
+.service-request-hero p {
+    margin: 0;
+    font-size: 17px;
+    color: #555;
+}
+
+.service-request-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 35px 20px 55px;
+}
+
+.service-request-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid #c7d0db;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #1f4e79;
+    box-shadow: 0 0 5px rgba(31, 78, 121, 0.3);
+}
+
+.form-group textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-help-text {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.form-group.checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group.checkbox input {
+    width: auto;
+    margin: 0;
+}
+
+.form-group.checkbox label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.submit-button,
+.reset-button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button {
+    background-color: #1f4e79;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #163a59;
+}
+
+.reset-button {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.reset-button:hover {
+    background-color: #d0d0d0;
+}
+
+.success-message,
+.error-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    font-weight: bold;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.tips-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tips-section h2 {
+    margin: 0 0 15px;
+    color: #1f4e79;
+    font-size: 20px;
+}
+
+.tips-section ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #555;
+}
+
+.tips-section li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .service-request-form {
+        padding: 20px;
+    }
+
+    .service-request-hero h1 {
+        font-size: 26px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .submit-button,
+    .reset-button {
+        width: 100%;
+    }
+}
+

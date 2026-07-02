@@ -1,10 +1,14 @@
 package com.cse460.smartcityhubweb.mockdata;
 
 import com.cse460.smartcityhubweb.model.Announcement;
+import com.cse460.smartcityhubweb.model.Department;
 import com.cse460.smartcityhubweb.model.Event;
+import com.cse460.smartcityhubweb.model.Service;
 import com.cse460.smartcityhubweb.model.User;
 import com.cse460.smartcityhubweb.repository.AnnouncementRepository;
+import com.cse460.smartcityhubweb.repository.DepartmentRepository;
 import com.cse460.smartcityhubweb.repository.EventRepository;
+import com.cse460.smartcityhubweb.repository.ServiceRepository;
 import com.cse460.smartcityhubweb.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -19,18 +23,24 @@ public class DemoDataLoader {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final AnnouncementRepository announcementRepository;
+    private final DepartmentRepository departmentRepository;
+    private final ServiceRepository serviceRepository;
 
-    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository, AnnouncementRepository announcementRepository) {
+    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository, AnnouncementRepository announcementRepository, DepartmentRepository departmentRepository, ServiceRepository serviceRepository) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.announcementRepository = announcementRepository;
+        this.departmentRepository = departmentRepository;
+        this.serviceRepository = serviceRepository;
     }
 
     @PostConstruct
     public void loadDemoData() {
+        loadDemoDepartments();
         loadDemoUsers();
         loadDemoEvents();
         loadDemoAnnouncements();
+        loadDemoServices();
     }
 
     private void loadDemoUsers() {
@@ -203,5 +213,58 @@ public class DemoDataLoader {
         };
 
         announcementRepository.saveAll(Arrays.asList(demoAnnouncements));
+    }
+
+    private void loadDemoServices() {
+        // TODO: Add more comprehensive demo services for various departments
+        Service[] demoServices = {
+                new Service(
+                        "service-001",
+                        "Clean Park Benches",
+                        "Clean and repair all benches in Central Park",
+                        "dept-001",
+                        "user-005",
+                        "In Progress",
+                        LocalDate.of(2026, 7, 15),
+                        LocalDate.of(2026, 7, 5),
+                        4
+                ),
+                new Service(
+                        "service-002",
+                        "Repair Pothole on Main St",
+                        "Fill and repair pothole at Main and 3rd Street",
+                        "dept-003",
+                        "user-005",
+                        "Pending",
+                        LocalDate.of(2026, 7, 10),
+                        LocalDate.of(2026, 7, 5),
+                        5
+                ),
+                new Service(
+                        "service-003",
+                        "Conduct Safety Awareness",
+                        "Hold monthly safety awareness meeting for residents",
+                        "dept-002",
+                        "user-005",
+                        "Completed",
+                        LocalDate.of(2026, 7, 8),
+                        LocalDate.of(2026, 6, 25),
+                        3
+                )
+        };
+
+        serviceRepository.saveAll(Arrays.asList(demoServices));
+    }
+
+    private void loadDemoDepartments() {
+        Department[] demoDepartments = {
+                new Department("dept-001", "Parks and Recreation", "user-004"),
+                new Department("dept-002", "Public Safety Department", "user-004"),
+                new Department("dept-003", "Public Works Department", "user-004"),
+                new Department("dept-004", "City Planning Department", "user-004"),
+                new Department("dept-005", "Education and Community Service", "user-004")
+        };
+
+        departmentRepository.saveAll(Arrays.asList(demoDepartments));
     }
 }

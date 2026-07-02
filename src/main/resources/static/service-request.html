@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Service Issue | SmartCity Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/service-requests.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main>
+    <section class="service-request-hero">
+        <h1>Report a Service Issue</h1>
+        <p>Help us keep the city clean and safe. Report potholes, broken streetlights, graffiti, and other service issues.</p>
+    </section>
+
+    <section class="service-request-content">
+        <form class="service-request-form" id="serviceRequestForm">
+            <div class="form-group">
+                <label for="issueType">Issue Type *</label>
+                <select id="issueType" name="issueType" required>
+                    <option value="">Select an issue type</option>
+                    <option value="pothole">Pothole</option>
+                    <option value="streetlight">Broken Streetlight</option>
+                    <option value="graffiti">Graffiti</option>
+                    <option value="trash">Overflowing Trash</option>
+                    <option value="sidewalk">Damaged Sidewalk</option>
+                    <option value="sign">Damaged Sign</option>
+                    <option value="tree">Tree Trimming Needed</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Title *</label>
+                <input type="text" id="title" name="title" placeholder="Brief description of the issue" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" name="description" placeholder="Provide detailed information about the issue" rows="6" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" placeholder="Street address or intersection" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="zipCode">Zip Code *</label>
+                    <input type="text" id="zipCode" name="zipCode" placeholder="85001" required>
+                </div>
+            </div>
+
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="followUp" name="followUp" value="yes">
+                <label for="followUp">I would like updates on the status of this report</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-button">Submit Report</button>
+                <button type="reset" class="reset-button">Clear Form</button>
+            </div>
+
+            <div id="successMessage" class="success-message"></div>
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+
+        <section class="tips-section">
+            <h2>Reporting Tips</h2>
+            <ul>
+                <li><strong>Be specific:</strong> Include as many details as possible about the issue location and nature</li>
+                <li><strong>Provide photos:</strong> Pictures help us respond faster and more accurately</li>
+                <li><strong>Include landmarks:</strong> Mention nearby stores or intersections if exact address is unclear</li>
+                <li><strong>Safety first:</strong> If the issue poses an immediate danger, please call 911</li>
+            </ul>
+        </section>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 SmartCity Hub</p>
+</footer>
+
+<script src="/js/header.js"></script>
+<script src="/js/auth-modal.js"></script>
+<script src="/js/service-requests.js"></script>
+</body>
+</html>
+

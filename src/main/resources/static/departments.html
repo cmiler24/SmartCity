@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments | SmartCity Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/departments.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main class="departments-main">
+    <section class="departments-hero">
+        <h1>City Departments</h1>
+        <p>Subscribe to departments to receive updates about events and announcements</p>
+    </section>
+
+    <section class="departments-container">
+        <!-- User's Subscriptions Section -->
+        <aside class="subscriptions-sidebar">
+            <div class="subscriptions-card">
+                <h2>Your Subscriptions</h2>
+                <div id="userSubscriptions" class="subscriptions-list">
+                    <p class="no-subscriptions">You haven't subscribed to any departments yet.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- All Departments Section -->
+        <section class="departments-section">
+            <div class="section-header">
+                <h2>All Departments</h2>
+                <div class="filter-controls">
+                    <!-- TODO: Add filter by department type -->
+                    <input type="text" id="departmentSearch" placeholder="Search departments..." onkeyup="filterDepartments()">
+                </div>
+            </div>
+
+            <div id="departmentsList" class="departments-grid">
+                <!-- TODO: Departments will be loaded here dynamically -->
+            </div>
+        </section>
+    </section>
+</main>
+
+<!-- Department Details Modal -->
+<div id="departmentModal" class="modal" onclick="closeDepartmentModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalDepartmentName">Department Name</h2>
+            <button class="modal-close" onclick="closeDepartmentModal()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="department-info">
+                <p><strong>Department Type:</strong> <span id="modalDepartmentType">-</span></p>
+                <p><strong>Manager ID:</strong> <span id="modalManagerId">-</span></p>
+                <p><strong>Status:</strong> <span id="modalStatus">-</span></p>
+            </div>
+
+            <div class="department-actions">
+                <!-- TODO: Implement subscribe/unsubscribe action -->
+                <button id="subscribeButton" class="btn-subscribe" onclick="handleSubscriptionToggle()">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/header.js"></script>
+<script src="/js/auth-modal.js"></script>
+<script src="/js/departments.js"></script>
+</body>
+</html>
+
