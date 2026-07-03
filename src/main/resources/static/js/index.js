@@ -22,18 +22,18 @@ function checkUserPermissions() {
             const user = JSON.parse(currentUser);
 
             // Show Admin Portal only if user is a city administrator
-            if (adminPortalCard && user.roles === USER_ROLES.CITY_ADMINISTRATOR) {
-                adminPortalCard.style.display = '';
+            if (user.roles.includes(USER_ROLES.CITY_ADMINISTRATOR)) {
+                adminPortalCard.style.display = 'block';
             }
 
             // Show Manager Portal only if user is a city manager
-            if (managerPortalCard && user.role === USER_ROLES.CITY_MANAGER) {
-                managerPortalCard.style.display = '';
+            if (user.roles.includes(USER_ROLES.CITY_MANAGER)) {
+                managerPortalCard.style.display = 'block';
             }
 
             // Show Assigned Tasks card only if user is a department worker
-            if (assignedTasksCard && user.role === USER_ROLES.DEPARTMENT_WORKER) {
-                assignedTasksCard.style.display = '';
+            if (user.roles.includes(USER_ROLES.DEPARTMENT_WORKER)) {
+                assignedTasksCard.style.display = 'block';
             }
         } catch (error) {
             console.error("Error checking user permissions:", error);
@@ -44,30 +44,17 @@ function checkUserPermissions() {
 // Run permission check when DOM is loaded
 document.addEventListener('DOMContentLoaded', checkUserPermissions);
 
-// TODO: Implement full assigned tasks viewer
-// - Display all tasks assigned to current user
-// - Filter by status
-// - Update task status
-
-function viewAssignedTasks() {
+document.getElementById('assignedTasksCard').addEventListener('click', () => {
+    // Check if user is logged in and is a department worker
     const currentUser = localStorage.getItem('currentUser');
-
     if (!currentUser) {
-        alert("Please log in to view your assigned tasks.");
+        alert("Please log in to access your tasks.");
+        // window.location.href = '/';
         return;
     }
-
-    try {
-        const user = JSON.parse(currentUser);
-        // TODO: Create a dedicated page for viewing assigned tasks
-        // For now, show an alert with a message
-        alert("Assigned Tasks feature coming soon! You can view your tasks assigned by department managers.");
-
-        // In the future, redirect to a dedicated page
-        // window.location.href = `/worker-tasks.html?userId=${user.id}`;
-    } catch (error) {
-        console.error("Error viewing assigned tasks:", error);
-        alert("Error loading assigned tasks");
+    const user = JSON.parse(currentUser);
+    if (user.roles.includes(USER_ROLES.DEPARTMENT_WORKER)) {
+        window.location.href = '/worker-dashboard.html';
     }
-}
+});
 

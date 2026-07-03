@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks | SmartCity Hub</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/manager-dash.css">
+    <link rel="stylesheet" href="/css/worker-dashboard.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+
+<div id="header"></div>
+
+<main class="manager-dashboard">
+    <section class="manager-cards">
+        <button class="dashboard-card" onclick="scrollToSection('tasksSection')">
+            <h3>My Tasks</h3>
+            <p>View and manage your assigned tasks</p>
+        </button>
+    </section>
+
+    <div class="manager-container">
+        <!-- My Tasks Section -->
+        <section class="manager-section" id="tasksSection">
+            <div class="section-header">
+                <h2>Assigned Tasks</h2>
+                <div class="task-filters">
+                    <select id="statusFilter" onchange="filterTasks()">
+                        <option value="">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="tasksOverview" class="services-overview">
+            </div>
+
+            <p id="noTasksMessage" class="no-tasks-message">You have no assigned tasks at this time.</p>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 SmartCity Hub</p>
+</footer>
+
+<script src="/js/constants.js"></script>
+<script src="/js/header.js"></script>
+<script src="/js/auth-modal.js"></script>
+<script src="/js/worker-dashboard.js"></script>
+</body>
+</html>
+
