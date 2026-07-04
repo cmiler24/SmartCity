@@ -26,8 +26,8 @@ function checkUserPermissions() {
                 adminPortalCard.style.display = 'block';
             }
 
-            // Show Manager Portal only if user is a city manager
-            if (user.roles.includes(USER_ROLES.CITY_MANAGER)) {
+            // Show Manager Portal only if user is a department manager
+            if (user.roles.includes(USER_ROLES.DEPARTMENT_MANAGER)) {
                 managerPortalCard.style.display = 'block';
             }
 
@@ -44,17 +44,5 @@ function checkUserPermissions() {
 // Run permission check when DOM is loaded
 document.addEventListener('DOMContentLoaded', checkUserPermissions);
 
-document.getElementById('assignedTasksCard').addEventListener('click', () => {
-    // Check if user is logged in and is a department worker
-    const currentUser = localStorage.getItem('currentUser');
-    if (!currentUser) {
-        alert("Please log in to access your tasks.");
-        // window.location.href = '/';
-        return;
-    }
-    const user = JSON.parse(currentUser);
-    if (user.roles.includes(USER_ROLES.DEPARTMENT_WORKER)) {
-        window.location.href = '/worker-dashboard.html';
-    }
-});
+
 

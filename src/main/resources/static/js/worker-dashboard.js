@@ -148,9 +148,13 @@ function escapeHtml(text) {
 
 // Load tasks when page is ready
 document.addEventListener('DOMContentLoaded', function() {
-    document.body.backgroundColor = '#eee';  // Set background color for the body
     // Check if user is logged in and is a department worker
     const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        alert("Please log in to access your tasks.");
+        window.location.href = '/';
+        return;
+    }
 
     try {
         const user = JSON.parse(currentUser);

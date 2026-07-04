@@ -52,7 +52,7 @@ public class DemoDataLoader {
                 "citizen123"
         );
         citizen.addRole("CITY_ADMINISTRATOR");
-        citizen.addRole("CITY_MANAGER");
+        citizen.addRole("DEPARTMENT_MANAGER");
 
         User guest = new User(
                 "user-002",

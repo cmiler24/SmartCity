@@ -44,7 +44,7 @@ public class AuthController {
         userRepository.save(user);
 
         System.out.println("Signup Successful");
-        return Map.of("name", user.getName(), "roles", user.getRoles().toString());
+        return Map.of("name", user.getName(), "roles", user.getRoles());
     }
 
     @PostMapping("/login")
@@ -53,7 +53,7 @@ public class AuthController {
         if (user != null && user.getPassword().equals(request.getPassword())) {
             System.out.println("Login Successful");
             return Map.of( "success", true, "name", user.getName(),
-                    "roles", user.getRoles().toString());
+                    "roles", user.getRoles());
         } else {
             System.out.println("Wrong email or password. Please try again");
             return Map.of("success", false);

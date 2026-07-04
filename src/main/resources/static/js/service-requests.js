@@ -30,16 +30,21 @@ document.getElementById('serviceRequestForm').addEventListener('submit', functio
 
     // TODO: Send data to backend API
     // For now, we'll show a success message and store in local storage
+    
     localStorage.setItem('lastServiceRequest', JSON.stringify(data));
 
     successMessage.textContent = 'Thank you! Your service request has been submitted successfully. We will review it shortly.';
     successMessage.style.display = 'block';
 
+
     // Reset form
     form.reset();
 
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('errorMessage').style.display = 'none';
+    // wait 3 seconds, then set the displays off
+    setTimeout(() => {
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+    }, 3000);
 });
 
 // Clear form button functionality

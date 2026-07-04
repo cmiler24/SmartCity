@@ -208,7 +208,7 @@ async function confirmDeleteSelected() {
 // Check if user is logged in and is an admin
 function checkAdminAccess() {
     const currentUser = localStorage.getItem("currentUser");
-    
+
     if (!currentUser) {
         alert("You must be logged in to access the admin dashboard.");
         window.location.href = "/";
@@ -218,7 +218,7 @@ function checkAdminAccess() {
     try {
         const user = JSON.parse(currentUser);
         const roles = user.roles || "";
-        
+
         if (!roles.includes("CITY_ADMINISTRATOR")) {
             alert("You do not have permission to access the admin dashboard.");
             window.location.href = "/";

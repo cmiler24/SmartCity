@@ -29,9 +29,9 @@ function checkManagerAccess() {
 
     try {
         const user = JSON.parse(currentUser);
-        const roles = user.roles || "";
+        const roles = user.roles || [];
 
-        if (!roles.includes("DEPARTMENT_MANAGER")) {
+        if (!roles.includes(USER_ROLES.DEPARTMENT_MANAGER)) {
             alert("You do not have permission to access the manager dashboard.");
             window.location.href = "/";
             return false;
