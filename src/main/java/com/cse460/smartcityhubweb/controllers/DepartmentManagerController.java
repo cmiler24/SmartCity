@@ -66,6 +66,9 @@ public class DepartmentManagerController {
             if (serviceData.containsKey("description")) {
                 service.setDescription((String) serviceData.get("description"));
             }
+            if (serviceData.containsKey("location")) {
+                service.setLocation((String) serviceData.get("location"));
+            }
             if (serviceData.containsKey("dueDate")) {
                 service.setDueDate(LocalDate.parse((String) serviceData.get("dueDate")));
             }

@@ -53,7 +53,7 @@ public class AuthController {
         if (user != null && user.getPassword().equals(request.getPassword())) {
             System.out.println("Login Successful");
             return Map.of( "success", true, "name", user.getName(),
-                    "roles", user.getRoles());
+                    "roles", user.getRoles(), "id", user.getId());
         } else {
             System.out.println("Wrong email or password. Please try again");
             return Map.of("success", false);

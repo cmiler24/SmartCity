@@ -62,12 +62,15 @@ async function loadServices() {
         const servicesList = document.getElementById("servicesList");
         servicesList.innerHTML = "";
 
-        if (services.length === 0) {
-            servicesList.innerHTML = "<p class='no-items'>No services assigned yet. Create one to get started!</p>";
+        // Filter out completed services
+        const uncompletedServices = services.filter(service => service.status !== "Completed");
+
+        if (uncompletedServices.length === 0) {
+            servicesList.innerHTML = "<p class='no-items'>No uncompleted services assigned. Create one to get started!</p>";
             return;
         }
 
-        services.forEach((service) => {
+        uncompletedServices.forEach((service) => {
             const serviceItem = createServiceListItem(service);
             servicesList.appendChild(serviceItem);
         });
@@ -95,8 +98,9 @@ function createServiceListItem(service) {
     div.innerHTML = `
         <div class="item-details">
             <h4>${service.title}</h4>
-            <p><strong>Assigned To (User ID):</strong> ${service.assignedToUserId}</p>
+            <p><strong>Assigned To (User ID):</strong> ${service.assignedWorker}</p>
             <p>${service.description}</p>
+            <p><strong>Location:</strong> ${service.location}</p>
             <p><strong>Due Date:</strong> ${formattedDate}</p>
             <p><strong>Status:</strong> <span class="service-status-badge status-${statusClass}">${service.status}</span></p>
             <p><strong>Priority:</strong> <span class="priority-badge priority-${service.priority}">Level ${service.priority}</span></p>
@@ -181,7 +185,8 @@ function createServiceOverviewItem(service) {
             <span class="service-status-badge status-${statusClass}">${service.status}</span>
         </div>
         <div class="service-details">
-            <p><strong>Worker (ID):</strong> ${service.assignedToUserId}</p>
+            <p><strong>Worker (ID):</strong> ${service.assignedWorker}</p>
+            <p><strong>Location:</strong> ${service.location}</p>
             <p><strong>Due Date:</strong> ${formattedDate}</p>
             <p><strong>Priority:</strong> <span class="priority-badge priority-${service.priority}">Level ${service.priority}</span></p>
         </div>
@@ -217,6 +222,7 @@ function openEditServiceModal(service) {
     currentEditService = service;
     document.getElementById("editServiceTitle").value = service.title;
     document.getElementById("editServiceDescription").value = service.description;
+    document.getElementById("editServiceLocation").value = service.location || '';
     document.getElementById("editServiceStatus").value = service.status;
     document.getElementById("editServiceDueDate").value = service.dueDate;
     document.getElementById("editServicePriority").value = service.priority;
@@ -270,8 +276,9 @@ async function handleCreateService(event) {
     const serviceData = {
         title: document.getElementById("serviceTitle").value,
         description: document.getElementById("serviceDescription").value,
+        location: document.getElementById("serviceLocation").value,
         departmentId: currentDepartmentId,
-        assignedToUserId: document.getElementById("serviceWorker").value,
+        assignedWorker: document.getElementById("serviceWorker").value,
         dueDate: document.getElementById("serviceDueDate").value,
         priority: parseInt(document.getElementById("servicePriority").value)
     };
@@ -307,6 +314,7 @@ async function handleEditService(event) {
     const serviceData = {
         title: document.getElementById("editServiceTitle").value,
         description: document.getElementById("editServiceDescription").value,
+        location: document.getElementById("editServiceLocation").value,
         status: document.getElementById("editServiceStatus").value,
         dueDate: document.getElementById("editServiceDueDate").value,
         priority: parseInt(document.getElementById("editServicePriority").value)

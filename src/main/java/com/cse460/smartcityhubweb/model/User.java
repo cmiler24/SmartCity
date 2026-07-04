@@ -77,4 +77,12 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
