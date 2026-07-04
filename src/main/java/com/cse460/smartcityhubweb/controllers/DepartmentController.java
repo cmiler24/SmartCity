@@ -4,10 +4,12 @@ import com.cse460.smartcityhubweb.model.Department;
 import com.cse460.smartcityhubweb.repository.DepartmentRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/departments")
+@RequestMapping("/api/departments/")
 public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;
@@ -26,9 +28,9 @@ public class DepartmentController {
         return departmentRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Department getDepartmentById(@PathVariable String id) {
-        return departmentRepository.findById(id).orElse(null);
+    @GetMapping("/{managerId}")
+    public Department getDepartmentByManagerId(@PathVariable String managerId) {
+        return departmentRepository.findAll().stream().filter(dept -> dept.getManagerID().equals(managerId)).findFirst().orElse(null);
     }
 
     // TODO: Implement subscribe endpoint

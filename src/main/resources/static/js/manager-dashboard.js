@@ -8,19 +8,18 @@
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 let allServices = [];
 let currentEditService = null;
-let currentDepartmentId = "dept-001"; // TODO: Get from user's department assignment
+let currentDepartmentId = null; // Will be set by loadManagerDepartment()
 
 // Load services when page loads
 document.addEventListener('DOMContentLoaded', async () => {
     checkManagerAccess();
+    await loadManagerDepartment();
     await loadServices();
     populateWorkerSelect();
 });
 
 // TODO: Implement checkManagerAccess to verify user is a department manager
 function checkManagerAccess() {
-    const currentUser = localStorage.getItem("currentUser");
-
     if (!currentUser) {
         alert("You must be logged in to access the manager dashboard.");
         window.location.href = "/";
@@ -28,8 +27,7 @@ function checkManagerAccess() {
     }
 
     try {
-        const user = JSON.parse(currentUser);
-        const roles = user.roles || [];
+        const roles = currentUser.roles || [];
 
         if (!roles.includes(USER_ROLES.DEPARTMENT_MANAGER)) {
             alert("You do not have permission to access the manager dashboard.");
@@ -44,6 +42,30 @@ function checkManagerAccess() {
     }
 }
 
+// Fetch the manager's department based on currentUser.id
+async function loadManagerDepartment() {
+    try {
+        const response = await fetch(`/api/departments/${currentUser.id}`);
+        if (response.ok) {
+            const department = await response.json();
+
+            if (department && department.managerId === currentUser.id) {
+                console.log(`Loaded department: ${department.name} (ID: ${department.id})`);
+            } else {
+                console.error("No department found for this manager");
+                alert("Error: No department assigned to this manager.");
+                window.location.href = "/";
+            }
+        } else {
+            console.error("Failed to fetch department");
+            alert("Error fetching department information.");
+        }
+    } catch (error) {
+        console.error("Error loading manager's department:", error);
+        alert("Error loading department.");
+    }
+}
+
 // Scroll to section
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -55,6 +77,11 @@ function scrollToSection(sectionId) {
 // Load services for the manager's department
 async function loadServices() {
     try {
+        if (!currentDepartmentId) {
+            console.error("Department ID not set");
+            return;
+        }
+
         const response = await fetch(`/api/depmanager/services/${currentDepartmentId}`);
         const services = await response.json();
 

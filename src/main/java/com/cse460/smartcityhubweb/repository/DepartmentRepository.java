@@ -18,9 +18,9 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
     Optional<Department> findByName(String name);
 
     /**
-     * Find all departments managed by a specific manager
+     * Find the department managed by a specific manager
      * @param managerID the manager's user ID
-     * @return List of departments managed by the specified manager
+     * @return Department managed by the specified manager
      */
-    List<Department> findByManagerID(String managerID);
+    Department findByManagerID(String managerID);
 }

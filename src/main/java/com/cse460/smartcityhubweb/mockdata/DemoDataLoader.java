@@ -36,8 +36,8 @@ public class DemoDataLoader {
 
     @PostConstruct
     public void loadDemoData() {
-        loadDemoDepartments();
         loadDemoUsers();
+        loadDemoDepartments();
         loadDemoEvents();
         loadDemoAnnouncements();
         loadDemoServices();
@@ -393,8 +393,8 @@ public class DemoDataLoader {
 
     private void loadDemoDepartments() {
         Department[] demoDepartments = {
-                new Department("dept-001", "Parks and Recreation", "user-004"),
-                new Department("dept-002", "Public Safety Department", "user-004"),
+                new Department("dept-001", "Parks and Recreation", "user-001"),
+                new Department("dept-002", "Public Safety Department", "user-001"),
                 new Department("dept-003", "Public Works Department", "user-004"),
                 new Department("dept-004", "City Planning Department", "user-004"),
                 new Department("dept-005", "Education and Community Service", "user-004")
