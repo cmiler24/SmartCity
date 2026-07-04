@@ -1,4 +1,4 @@
-document.getElementById('serviceRequestForm').addEventListener('submit', function(e) {
+document.getElementById('serviceRequestForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const form = this;
@@ -28,28 +28,57 @@ document.getElementById('serviceRequestForm').addEventListener('submit', functio
         return;
     }
 
-    // TODO: Send data to backend API
-    // For now, we'll show a success message and store in local storage
-    
-    localStorage.setItem('lastServiceRequest', JSON.stringify(data));
+    try {
+        // Send data to backend API
+        const response = await fetch('/api/request-service', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-    successMessage.textContent = 'Thank you! Your service request has been submitted successfully. We will review it shortly.';
-    successMessage.style.display = 'block';
+        if (response.ok) {
+            // Show alert notification
+            alert('Service request sent successfully! Thank you for reporting this issue.');
 
+            // Hide form and show success message with action buttons
+            form.style.display = 'none';
 
-    // Reset form
+            successMessage.innerHTML = `
+                <div class="success-content">
+                    <h2>Service Request Sent!</h2>
+                    <p>Thank you for reporting this issue. Our team will review it shortly.</p>
+                    <div class="success-actions">
+                        <button class="action-button request-another" onclick="requestAnother()">Request Another Service</button>
+                        <a href="/index.html" class="action-button go-home">Go to Home Page</a>
+                    </div>
+                </div>
+            `;
+            successMessage.style.display = 'block';
+
+            // Reset form
+            form.reset();
+        } else {
+            const errorData = await response.json();
+            errorMessage.textContent = errorData.message || 'There was an error submitting your service request. Please try again later.';
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessage.textContent = 'Network error: Unable to submit your request. Please check your connection and try again.';
+        errorMessage.style.display = 'block';
+    }
+});
+
+// Function to reset the form and show it again for another request
+function requestAnother() {
+    const form = document.getElementById('serviceRequestForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.style.display = 'block';
+    successMessage.style.display = 'none';
     form.reset();
-
-    // wait 3 seconds, then set the displays off
-    setTimeout(() => {
-        successMessage.style.display = 'none';
-        errorMessage.style.display = 'none';
-    }, 3000);
-});
-
-// Clear form button functionality
-document.querySelector('.reset-button').addEventListener('click', function() {
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('errorMessage').style.display = 'none';
-});
+    form.scrollIntoView({ behavior: 'smooth' });
+}
 

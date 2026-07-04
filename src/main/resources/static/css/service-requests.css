@@ -6,7 +6,7 @@
 
 .service-request-hero h1 {
     margin: 0 0 12px;
-    color: #1f4e79;
+    color: #d97706;
     font-size: 34px;
 }
 
@@ -57,8 +57,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #1f4e79;
-    box-shadow: 0 0 5px rgba(31, 78, 121, 0.3);
+    border-color: #d97706;
+    box-shadow: 0 0 5px rgba(217, 119, 6, 0.3);
 }
 
 .form-group textarea {
@@ -113,12 +113,12 @@
 }
 
 .submit-button {
-    background-color: #1f4e79;
+    background-color: #d97706;
     color: white;
 }
 
 .submit-button:hover {
-    background-color: #163a59;
+    background-color: #b45309;
 }
 
 .reset-button {
@@ -160,7 +160,7 @@
 
 .tips-section h2 {
     margin: 0 0 15px;
-    color: #1f4e79;
+    color: #d97706;
     font-size: 20px;
 }
 
@@ -173,6 +173,60 @@
 .tips-section li {
     margin-bottom: 12px;
     line-height: 1.6;
+}
+
+.success-content {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.success-content h2 {
+    color: #155724;
+    margin: 0 0 10px;
+    font-size: 24px;
+}
+
+.success-content p {
+    color: #155724;
+    margin: 0 0 25px;
+    font-size: 16px;
+}
+
+.success-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.action-button.request-another {
+    background-color: #22c55e;
+    color: white;
+}
+
+.action-button.request-another:hover {
+    background-color: #16a34a;
+}
+
+.action-button.go-home {
+    background-color: #d97706;
+    color: white;
+}
+
+.action-button.go-home:hover {
+    background-color: #b45309;
 }
 
 @media (max-width: 700px) {
@@ -194,6 +248,14 @@
 
     .submit-button,
     .reset-button {
+        width: 100%;
+    }
+
+    .success-actions {
+        flex-direction: column;
+    }
+
+    .action-button {
         width: 100%;
     }
 }

@@ -11,8 +11,12 @@ public class Service {
 
     private String title;
     private String description;
+    private String issueType; // Type of service request (pothole, graffiti, etc.)
+    private String location;
+    private String zipCode;
+    private Boolean followUp;
     private String departmentId;
-    private String assignedToUserId;
+    private String assignedWorker;
     private String status; // "Pending", "In Progress", "Completed"
     private LocalDate dueDate;
     private LocalDate createdDate;
@@ -21,14 +25,19 @@ public class Service {
     public Service() {
     }
 
-    public Service(String id, String title, String description, String departmentId,
-                String assignedToUserId, String status, LocalDate dueDate,
+    public Service(String id, String title, String description, String issueType,
+                String location, String zipCode, Boolean followUp, String departmentId,
+                String assignedWorker, String status, LocalDate dueDate,
                 LocalDate createdDate, int priority) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.issueType = issueType;
+        this.location = location;
+        this.zipCode = zipCode;
+        this.followUp = followUp;
         this.departmentId = departmentId;
-        this.assignedToUserId = assignedToUserId;
+        this.assignedWorker = assignedWorker;
         this.status = status;
         this.dueDate = dueDate;
         this.createdDate = createdDate;
@@ -60,6 +69,38 @@ public class Service {
         this.description = description;
     }
 
+    public String getIssueType() {
+        return issueType;
+    }
+
+    public void setIssueType(String issueType) {
+        this.issueType = issueType;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Boolean getFollowUp() {
+        return followUp;
+    }
+
+    public void setFollowUp(Boolean followUp) {
+        this.followUp = followUp;
+    }
+
     public String getDepartmentId() {
         return departmentId;
     }
@@ -68,12 +109,12 @@ public class Service {
         this.departmentId = departmentId;
     }
 
-    public String getAssignedToUserId() {
-        return assignedToUserId;
+    public String getAssignedWorker() {
+        return assignedWorker;
     }
 
-    public void setAssignedToUserId(String assignedToUserId) {
-        this.assignedToUserId = assignedToUserId;
+    public void setAssignedWorker(String assignedWorker) {
+        this.assignedWorker = assignedWorker;
     }
 
     public String getStatus() {

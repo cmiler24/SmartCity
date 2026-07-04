@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ServiceRepository extends JpaRepository<Service, String> {
     List<Service> findByDepartmentId(String departmentId);
-    List<Service> findByAssignedToUserId(String userId);
+    List<Service> findByAssignedWorker(String assignedWorker);
 }
 

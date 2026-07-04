@@ -216,12 +216,16 @@ public class DemoDataLoader {
     }
 
     private void loadDemoServices() {
-        // TODO: Add more comprehensive demo services for various departments
         Service[] demoServices = {
+                // Assigned tasks for department workers
                 new Service(
                         "service-001",
                         "Clean Park Benches",
                         "Clean and repair all benches in Central Park",
+                        null,
+                        "Central Park",
+                        "85001",
+                        false,
                         "dept-001",
                         "user-005",
                         "In Progress",
@@ -233,6 +237,10 @@ public class DemoDataLoader {
                         "service-002",
                         "Repair Pothole on Main St",
                         "Fill and repair pothole at Main and 3rd Street",
+                        "pothole",
+                        "Main St and 3rd St",
+                        "85001",
+                        true,
                         "dept-003",
                         "user-005",
                         "Pending",
@@ -244,12 +252,139 @@ public class DemoDataLoader {
                         "service-003",
                         "Conduct Safety Awareness",
                         "Hold monthly safety awareness meeting for residents",
+                        null,
+                        "Community Center",
+                        "85004",
+                        false,
                         "dept-002",
                         "user-005",
                         "Completed",
                         LocalDate.of(2026, 7, 8),
                         LocalDate.of(2026, 6, 25),
                         3
+                ),
+                // Service requests submitted by citizens
+                new Service(
+                        "service-004",
+                        "Broken Streetlight",
+                        "Street light is not working at the intersection",
+                        "streetlight",
+                        "Oak Ave and Elm St",
+                        "85003",
+                        true,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 20),
+                        LocalDate.of(2026, 7, 4),
+                        3
+                ),
+                new Service(
+                        "service-005",
+                        "Graffiti on Bridge",
+                        "Graffiti covering multiple surfaces under the downtown bridge",
+                        "graffiti",
+                        "Downtown Bridge, River Rd",
+                        "85002",
+                        false,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 18),
+                        LocalDate.of(2026, 7, 3),
+                        2
+                ),
+                new Service(
+                        "service-006",
+                        "Overflowing Trash Can",
+                        "Trash receptacle at park entrance is full and overflowing",
+                        "trash",
+                        "City Park Entrance",
+                        "85005",
+                        true,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 12),
+                        LocalDate.of(2026, 7, 4),
+                        4
+                ),
+                // Additional service requests
+                new Service(
+                        "service-007",
+                        "Damaged Sidewalk",
+                        "Cracked and uneven concrete on sidewalk creates safety hazard",
+                        "sidewalk",
+                        "Maple Dr between 5th and 6th Ave",
+                        "85006",
+                        true,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 22),
+                        LocalDate.of(2026, 7, 2),
+                        4
+                ),
+                new Service(
+                        "service-008",
+                        "Tree Trimming Needed",
+                        "Large branches hanging over road, potential hazard during storms",
+                        "tree",
+                        "Heritage Park Trail",
+                        "85001",
+                        false,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 25),
+                        LocalDate.of(2026, 7, 3),
+                        2
+                ),
+                new Service(
+                        "service-009",
+                        "Damaged Street Sign",
+                        "Stop sign at intersection is bent and partially obscured",
+                        "sign",
+                        "Madison Ave and Park St",
+                        "85004",
+                        false,
+                        null,
+                        null,
+                        "Pending",
+                        LocalDate.of(2026, 7, 16),
+                        LocalDate.of(2026, 7, 4),
+                        3
+                ),
+                // Additional assigned tasks
+                new Service(
+                        "service-010",
+                        "Landscape Maintenance",
+                        "Trim hedges and water flower beds at City Hall plaza",
+                        null,
+                        "City Hall Plaza",
+                        "85002",
+                        false,
+                        "dept-001",
+                        "user-005",
+                        "Pending",
+                        LocalDate.of(2026, 7, 12),
+                        LocalDate.of(2026, 7, 4),
+                        2
+                ),
+                new Service(
+                        "service-011",
+                        "Monthly Street Sweeping",
+                        "Sweep and clean Main Street from 1st Ave to 5th Ave",
+                        null,
+                        "Main Street",
+                        "85001",
+                        false,
+                        "dept-003",
+                        "user-005",
+                        "In Progress",
+                        LocalDate.of(2026, 7, 8),
+                        LocalDate.of(2026, 7, 1),
+                        1
                 )
         };
 

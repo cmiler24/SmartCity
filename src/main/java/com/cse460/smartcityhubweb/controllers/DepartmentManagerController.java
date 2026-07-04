@@ -33,13 +33,16 @@ public class DepartmentManagerController {
 
     @PostMapping("/services")
     public Service createService(@RequestBody Map<String, Object> serviceData) {
-        // TODO: Implement full service creation logic
         Service service = new Service(
                 UUID.randomUUID().toString(),
                 (String) serviceData.get("title"),
                 (String) serviceData.get("description"),
+                null, // issueType - null for manager-assigned tasks
+                (String) serviceData.getOrDefault("location", ""),
+                (String) serviceData.getOrDefault("zipCode", ""),
+                false, // followUp - false for manager-assigned tasks
                 (String) serviceData.get("departmentId"),
-                (String) serviceData.get("assignedToUserId"),
+                (String) serviceData.get("assignedWorker"),
                 "Pending",
                 LocalDate.parse((String) serviceData.get("dueDate")),
                 LocalDate.now(),
@@ -83,7 +86,7 @@ public class DepartmentManagerController {
 
     @GetMapping("/services/worker/{userId}")
     public List<Service> getServicesForWorker(@PathVariable String userId) {
-        return serviceRepository.findByAssignedToUserId(userId);
+        return serviceRepository.findByAssignedWorker(userId);
     }
 }
 
