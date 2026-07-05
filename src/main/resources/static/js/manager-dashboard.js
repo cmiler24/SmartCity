@@ -12,6 +12,8 @@ let departmentId = null; // Will be set by loadManagerDepartment()
 let availableServices = []; // All uncompleted services for selection
 let selectedServiceForAssignment = null; // Currently selected service in assign modal
 let currentServiceTab = 'create'; // Track which tab is active (create or select)
+let currentAssignService = null;
+let workers = [];
 
 // Load services when page loads
 document.addEventListener('DOMContentLoaded', async () => {
@@ -237,6 +239,7 @@ function createServiceListItem(service) {
             <p><strong>Priority:</strong> <span class="priority-badge priority-${service.priority}">Level ${service.priority}</span></p>
         </div>
         <div class="item-actions">
+            <button class="btn-assign" onclick="openAssignWorkerModal(${JSON.stringify(service).replace(/"/g, '&quot;')})">Assign</button>
             <button class="btn-edit" onclick="openEditServiceModal(${JSON.stringify(service).replace(/"/g, '&quot;')})">Edit</button>
         </div>
     `;
@@ -246,19 +249,27 @@ function createServiceListItem(service) {
 
 // TODO: Populate worker select with actual department workers
 function populateWorkerSelect() {
-    const select = document.getElementById('serviceWorker');
+    const createSelect = document.getElementById('serviceWorker');
+    const selectExistingWorker = document.getElementById('selectServiceWorker');
+    const assignWorkerSelect = document.getElementById('assignWorkerSelect');
 
     // Temporary: Add demo workers
-    const demoWorkers = [
+    workers = [
         { id: 'user-005', name: 'Will Worker' },
         // TODO: Load actual workers from department
     ];
 
-    demoWorkers.forEach(worker => {
-        const option = document.createElement('option');
-        option.value = worker.id;
-        option.textContent = worker.name;
-        select.appendChild(option);
+    [createSelect, selectExistingWorker, assignWorkerSelect].forEach((selectElement) => {
+        if (!selectElement) return;
+
+        selectElement.innerHTML = '<option value="">Select a worker</option>';
+
+        workers.forEach(worker => {
+            const option = document.createElement('option');
+            option.value = worker.id;
+            option.textContent = worker.name;
+            selectElement.appendChild(option);
+        });
     });
 }
 
@@ -368,6 +379,45 @@ function closeServiceModalOnBackdrop(event) {
     }
 }
 
+// Modal functions for Assign Worker
+function openAssignWorkerModal(service) {
+    currentAssignService = service;
+
+    const titleInput = document.getElementById("assignServiceTitle");
+    const workerSelect = document.getElementById("assignWorkerSelect");
+    if (titleInput) {
+        titleInput.value = service.title;
+    }
+    if (workerSelect) {
+        workerSelect.value = service.assignedWorker || "";
+    }
+
+    const modal = document.getElementById("assignWorkerModal");
+    if (modal) {
+        modal.classList.add("is-open");
+    }
+}
+
+function closeAssignWorkerModal() {
+    const modal = document.getElementById("assignWorkerModal");
+    if (modal) {
+        modal.classList.remove("is-open");
+    }
+
+    const form = document.getElementById("assignWorkerForm");
+    if (form) {
+        form.reset();
+    }
+
+    currentAssignService = null;
+}
+
+function closeAssignWorkerModalOnBackdrop(event) {
+    if (event.target.id === "assignWorkerModal") {
+        closeAssignWorkerModal();
+    }
+}
+
 // Modal functions for Edit Service
 function openEditServiceModal(service) {
     currentEditService = service;
@@ -416,14 +466,67 @@ document.addEventListener("DOMContentLoaded", () => {
         editServiceForm.addEventListener("submit", handleEditService);
     }
 
+    const assignWorkerForm = document.getElementById("assignWorkerForm");
+    if (assignWorkerForm) {
+        assignWorkerForm.addEventListener("submit", handleAssignWorker);
+    }
+
     // Close modals on Escape key
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
             closeCreateServiceModal();
             closeEditServiceModal();
+            closeAssignWorkerModal();
         }
     });
 });
+
+async function handleAssignWorker(event) {
+    event.preventDefault();
+
+    if (!currentAssignService) {
+        return;
+    }
+
+    const assignedWorker = document.getElementById("assignWorkerSelect").value;
+    if (!assignedWorker) {
+        alert("Please select a worker");
+        return;
+    }
+
+    const serviceData = {
+        title: currentAssignService.title,
+        description: currentAssignService.description,
+        location: currentAssignService.location,
+        status: currentAssignService.status,
+        dueDate: currentAssignService.dueDate,
+        priority: parseInt(currentAssignService.priority),
+        departmentId: departmentId,
+        assignedWorker: assignedWorker
+    };
+
+    try {
+        const response = await fetch(`/api/depmanager/services/${currentAssignService.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(serviceData)
+        });
+
+        if (response.ok) {
+            closeAssignWorkerModal();
+            await loadServices();
+            await loadAvailableServices();
+            alert("Worker assigned successfully");
+        } else {
+            alert("Failed to assign worker");
+        }
+    } catch (error) {
+        console.error("Error assigning worker:", error);
+        alert("Error assigning worker");
+    }
+}
 
 async function handleCreateService(event) {
     event.preventDefault();

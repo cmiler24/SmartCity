@@ -71,12 +71,6 @@
             <button class="modal-close" onclick="closeCreateServiceModal()">&times;</button>
         </div>
 
-        <!-- Tabs for Create vs Select -->
-        <div style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid #e0e0e0; padding: 0 20px;">
-            <button type="button" id="createTabBtn" class="tab-btn" style="padding: 10px 15px; border: none; background: none; cursor: pointer; font-weight: bold; color: #d97706; border-bottom: 3px solid #d97706;" onclick="switchServiceTab('create')">+ Create New</button>
-            <button type="button" id="selectTabBtn" class="tab-btn" style="padding: 10px 15px; border: none; background: none; cursor: pointer; font-weight: bold; color: #999;" onclick="switchServiceTab('select')">Select Existing</button>
-        </div>
-
         <!-- Create Service Form -->
         <div id="createServicePanel" style="display: block;">
             <form id="createServiceForm" class="modal-form">
@@ -125,72 +119,35 @@
             </form>
         </div>
 
-        <!-- Select Existing Service Panel -->
-        <div id="selectServicePanel" style="display: none;">
-            <form id="selectServiceForm" class="modal-form">
-                <div class="form-group">
-                    <label for="availableServiceSelect">Select a Service</label>
-                    <select id="availableServiceSelect" required onchange="populateServiceDetails()">
-                        <option value="">Choose a service...</option>
-                    </select>
-                </div>
+    </div>
+</div>
 
-                <div id="serviceDetailsContainer" style="display: none;">
-                    <div class="form-group">
-                        <label>Service Title</label>
-                        <input type="text" id="selectedServiceTitle" readonly style="background-color: #f0f0f0;">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="selectedServiceDescription" rows="3" readonly style="background-color: #f0f0f0;"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Issue Type</label>
-                        <input type="text" id="selectedServiceIssueType" readonly style="background-color: #f0f0f0;">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" id="selectedServiceLocation" readonly style="background-color: #f0f0f0;">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Current Status</label>
-                        <input type="text" id="selectedServiceStatus" readonly style="background-color: #f0f0f0;">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="selectServiceWorker">Assign to Worker</label>
-                        <select id="selectServiceWorker" required>
-                            <option value="">Select a worker</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="selectServiceDueDate">Due Date</label>
-                        <input type="date" id="selectServiceDueDate" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="selectServicePriority">Priority</label>
-                        <select id="selectServicePriority" required>
-                            <option value="1">Low (1)</option>
-                            <option value="2">Medium-Low (2)</option>
-                            <option value="3" selected>Medium (3)</option>
-                            <option value="4">Medium-High (4)</option>
-                            <option value="5">High (5)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="closeCreateServiceModal()">Cancel</button>
-                    <button type="submit" class="btn-primary" id="assignButton" disabled>Assign Service</button>
-                </div>
-            </form>
+<!-- Assign Worker Modal -->
+<div id="assignWorkerModal" class="modal" onclick="closeAssignWorkerModalOnBackdrop(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Assign Service</h2>
+            <button class="modal-close" onclick="closeAssignWorkerModal()">&times;</button>
         </div>
+
+        <form id="assignWorkerForm" class="modal-form">
+            <div class="form-group">
+                <label for="assignServiceTitle">Service</label>
+                <input type="text" id="assignServiceTitle" readonly style="background-color: #f0f0f0;">
+            </div>
+
+            <div class="form-group">
+                <label for="assignWorkerSelect">Assign to Worker</label>
+                <select id="assignWorkerSelect" required>
+                    <option value="">Select a worker</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeAssignWorkerModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Assign Worker</button>
+            </div>
+        </form>
     </div>
 </div>
 
