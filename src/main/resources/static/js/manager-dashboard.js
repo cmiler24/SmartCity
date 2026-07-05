@@ -9,12 +9,16 @@ let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 let allServices = [];
 let currentEditService = null;
 let departmentId = null; // Will be set by loadManagerDepartment()
+let availableServices = []; // All uncompleted services for selection
+let selectedServiceForAssignment = null; // Currently selected service in assign modal
+let currentServiceTab = 'create'; // Track which tab is active (create or select)
 
 // Load services when page loads
 document.addEventListener('DOMContentLoaded', async () => {
     checkManagerAccess();
     await loadManagerDepartment();
     await loadServices();
+    await loadAvailableServices();
     populateWorkerSelect();
 });
 
@@ -106,6 +110,105 @@ async function loadServices() {
         updateServicesOverview();
     } catch (error) {
         console.error("Error loading services:", error);
+    }
+}
+
+// Load all uncompleted services available for selection
+async function loadAvailableServices() {
+    try {
+        const response = await fetch('/api/depmanager/services');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch available services: ${response.status}`);
+        }
+
+        const services = await response.json();
+
+        // Show all uncompleted services regardless of assignment status
+        availableServices = services.filter(service =>
+            service.status !== "Completed"
+        );
+
+        populateAvailableServiceSelect();
+        console.log(`Loaded ${availableServices.length} available services`);
+    } catch (error) {
+        console.error("Error loading available services:", error);
+    }
+}
+
+// Populate the available services dropdown
+function populateAvailableServiceSelect() {
+    const select = document.getElementById('availableServiceSelect');
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Choose a service...</option>';
+
+    if (availableServices.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No available services';
+        option.disabled = true;
+        select.appendChild(option);
+        return;
+    }
+
+    availableServices.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.id;
+        const status = service.departmentId ? ` [${service.status}]` : ' [Unassigned]';
+        option.textContent = `${service.title} - ${service.issueType || 'Task'}${status} (${service.location || 'N/A'})`;
+        select.appendChild(option);
+    });
+}
+
+// Switch between Create and Select tabs
+function switchServiceTab(tab) {
+    currentServiceTab = tab;
+    const createPanel = document.getElementById('createServicePanel');
+    const selectPanel = document.getElementById('selectServicePanel');
+    const createTabBtn = document.getElementById('createTabBtn');
+    const selectTabBtn = document.getElementById('selectTabBtn');
+
+    if (tab === 'create') {
+        createPanel.style.display = 'block';
+        selectPanel.style.display = 'none';
+        createTabBtn.style.color = '#d97706';
+        createTabBtn.style.borderBottom = '3px solid #d97706';
+        selectTabBtn.style.color = '#999';
+        selectTabBtn.style.borderBottom = 'none';
+    } else {
+        createPanel.style.display = 'none';
+        selectPanel.style.display = 'block';
+        createTabBtn.style.color = '#999';
+        createTabBtn.style.borderBottom = 'none';
+        selectTabBtn.style.color = '#d97706';
+        selectTabBtn.style.borderBottom = '3px solid #d97706';
+    }
+}
+
+// Populate service details when a service is selected
+function populateServiceDetails() {
+    const serviceId = document.getElementById('availableServiceSelect').value;
+    const detailsContainer = document.getElementById('serviceDetailsContainer');
+    const assignButton = document.getElementById('assignButton');
+
+    if (!serviceId) {
+        detailsContainer.style.display = 'none';
+        assignButton.disabled = true;
+        selectedServiceForAssignment = null;
+        return;
+    }
+
+    selectedServiceForAssignment = availableServices.find(s => s.id === serviceId);
+
+    if (selectedServiceForAssignment) {
+        document.getElementById('selectedServiceTitle').value = selectedServiceForAssignment.title;
+        document.getElementById('selectedServiceDescription').value = selectedServiceForAssignment.description;
+        document.getElementById('selectedServiceIssueType').value = selectedServiceForAssignment.issueType || 'Manager Task';
+        document.getElementById('selectedServiceLocation').value = selectedServiceForAssignment.location || '';
+        document.getElementById('selectedServiceStatus').value = selectedServiceForAssignment.status;
+
+        detailsContainer.style.display = 'block';
+        assignButton.disabled = false;
     }
 }
 
@@ -235,7 +338,27 @@ function closeCreateServiceModal() {
     const modal = document.getElementById("createServiceModal");
     if (modal) {
         modal.classList.remove("is-open");
-        document.getElementById("createServiceForm").reset();
+        // Reset both forms
+        const createForm = document.getElementById("createServiceForm");
+        if (createForm) {
+            createForm.reset();
+        }
+        const selectForm = document.getElementById("selectServiceForm");
+        if (selectForm) {
+            selectForm.reset();
+        }
+        // Hide details and disable button
+        const detailsContainer = document.getElementById("serviceDetailsContainer");
+        if (detailsContainer) {
+            detailsContainer.style.display = 'none';
+        }
+        const assignButton = document.getElementById("assignButton");
+        if (assignButton) {
+            assignButton.disabled = true;
+        }
+        // Reset to create tab
+        switchServiceTab('create');
+        selectedServiceForAssignment = null;
     }
 }
 
@@ -276,11 +399,16 @@ function closeEditServiceModalOnBackdrop(event) {
 }
 
 // TODO: Implement full service assignment and management
-// Handle create service form submission
+// Handle form submissions
 document.addEventListener("DOMContentLoaded", () => {
     const createServiceForm = document.getElementById("createServiceForm");
     if (createServiceForm) {
         createServiceForm.addEventListener("submit", handleCreateService);
+    }
+
+    const selectServiceForm = document.getElementById("selectServiceForm");
+    if (selectServiceForm) {
+        selectServiceForm.addEventListener("submit", handleSelectService);
     }
 
     const editServiceForm = document.getElementById("editServiceForm");
@@ -305,7 +433,7 @@ async function handleCreateService(event) {
         title: document.getElementById("serviceTitle").value,
         description: document.getElementById("serviceDescription").value,
         location: document.getElementById("serviceLocation").value,
-        departmentId: currentDepartmentId,
+        departmentId: departmentId,
         assignedWorker: document.getElementById("serviceWorker").value,
         dueDate: document.getElementById("serviceDueDate").value,
         priority: parseInt(document.getElementById("servicePriority").value)
@@ -323,6 +451,55 @@ async function handleCreateService(event) {
         if (response.ok) {
             closeCreateServiceModal();
             await loadServices();
+            await loadAvailableServices();
+            alert("Service created and assigned successfully");
+        } else {
+            alert("Failed to create and assign service");
+        }
+    } catch (error) {
+        console.error("Error creating and assigning service:", error);
+        alert("Error creating service");
+    }
+}
+
+async function handleSelectService(event) {
+    event.preventDefault();
+
+    if (!selectedServiceForAssignment) {
+        alert("Please select a service to assign");
+        return;
+    }
+
+    const assignedWorker = document.getElementById("selectServiceWorker").value;
+    if (!assignedWorker) {
+        alert("Please select a worker");
+        return;
+    }
+
+    const serviceData = {
+        title: selectedServiceForAssignment.title,
+        description: selectedServiceForAssignment.description,
+        location: selectedServiceForAssignment.location,
+        status: selectedServiceForAssignment.status,
+        dueDate: document.getElementById("selectServiceDueDate").value,
+        priority: parseInt(document.getElementById("selectServicePriority").value),
+        departmentId: departmentId,
+        assignedWorker: assignedWorker
+    };
+
+    try {
+        const response = await fetch(`/api/depmanager/services/${selectedServiceForAssignment.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(serviceData)
+        });
+
+        if (response.ok) {
+            closeCreateServiceModal();
+            await loadServices();
+            await loadAvailableServices();
             alert("Service assigned successfully");
         } else {
             alert("Failed to assign service");

@@ -87,12 +87,25 @@ public class DemoDataLoader {
                 "worker123"
         );
 
+        User testUser = new User(
+                "user-test",
+                "Test User (All Roles)",
+                "test@smartcityhub.test",
+                java.util.Arrays.asList("GUEST"),
+                "test123"
+        );
+        testUser.addRole("CITIZEN");
+        testUser.addRole("CITY_ADMINISTRATOR");
+        testUser.addRole("DEPARTMENT_MANAGER");
+        testUser.addRole("DEPARTMENT_WORKER");
+
         User[] demoUsers = {
                 citizen,
                 guest,
                 admin,
                 manager,
-                worker
+                worker,
+                testUser
         };
 
         userRepository.saveAll(Arrays.asList(demoUsers));
