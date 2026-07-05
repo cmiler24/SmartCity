@@ -52,8 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadDepartments() {
     try {
         const response = await fetch('/api/departments');
-        const departments = await response.json();
-        allDepartments = departments;
+        allDepartments = await response.json();
     } catch (error) {
         console.error('Error loading departments:', error);
     }
@@ -154,7 +153,7 @@ function createDepartmentCard(dept, isSubscribed) {
             <button class="btn-view-details" onclick="openDepartmentModal('${dept.id}')">
                 View Details
             </button>
-            ${isSubscribed 
+            ${isSubscribed
                 ? `<button class="btn-unsubscribe-card" onclick="unsubscribeFromDepartment('${dept.id}')">Unsubscribe</button>`
                 : `<button class="btn-subscribe-card" onclick="subscribeToDepartment('${dept.id}')">Subscribe</button>`
             }

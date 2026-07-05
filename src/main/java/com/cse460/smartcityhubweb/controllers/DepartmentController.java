@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/departments/")
+@RequestMapping("/api/departments")
 public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;
