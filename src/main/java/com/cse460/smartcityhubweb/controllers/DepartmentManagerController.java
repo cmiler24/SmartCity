@@ -5,6 +5,7 @@ import com.cse460.smartcityhubweb.repository.ServiceRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,11 +26,6 @@ public class DepartmentManagerController {
     // - updateService() - Update service status or details
     // - completeService() - Mark service as completed
     // - getWorkers() - Get workers in the department
-
-    @GetMapping("/services/{departmentId}")
-    public List<Service> getServicesByDepartment(@PathVariable String departmentId) {
-        return serviceRepository.findByDepartmentId(departmentId);
-    }
 
     @PostMapping("/services")
     public Service createService(@RequestBody Map<String, Object> serviceData) {
@@ -54,7 +50,6 @@ public class DepartmentManagerController {
 
     @PutMapping("/services/{id}")
     public Service updateService(@PathVariable String id, @RequestBody Map<String, Object> serviceData) {
-        // TODO: Implement service update logic
         Service service = serviceRepository.findById(id).orElse(null);
         if (service != null) {
             if (serviceData.containsKey("title")) {
@@ -82,10 +77,15 @@ public class DepartmentManagerController {
 
     @DeleteMapping("/services/{id}")
     public Map<String, String> deleteService(@PathVariable String id) {
-        // TODO: Implement service deletion logic
         serviceRepository.deleteById(id);
         return Map.of("message", "Service deleted successfully");
     }
+
+    @GetMapping("/get-services/{departmentId}")
+    public List<Service> getServicesByDepartment(@PathVariable String departmentId) {
+        return serviceRepository.findByDepartmentID(departmentId).stream().toList();
+    }
+
 
     @GetMapping("/services/worker/{userId}")
     public List<Service> getServicesForWorker(@PathVariable String userId) {

@@ -15,7 +15,7 @@ public class Service {
     private String location;
     private String zipCode;
     private Boolean followUp;
-    private String departmentId;
+    private String departmentID;
     private String assignedWorker;
     private String status; // "Pending", "In Progress", "Completed"
     private LocalDate dueDate;
@@ -26,7 +26,7 @@ public class Service {
     }
 
     public Service(String id, String title, String description, String issueType,
-                String location, String zipCode, Boolean followUp, String departmentId,
+                String location, String zipCode, Boolean followUp, String departmentID,
                 String assignedWorker, String status, LocalDate dueDate,
                 LocalDate createdDate, int priority) {
         this.id = id;
@@ -36,7 +36,7 @@ public class Service {
         this.location = location;
         this.zipCode = zipCode;
         this.followUp = followUp;
-        this.departmentId = departmentId;
+        this.departmentID = departmentID;
         this.assignedWorker = assignedWorker;
         this.status = status;
         this.dueDate = dueDate;
@@ -101,12 +101,12 @@ public class Service {
         this.followUp = followUp;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getDepartmentID() {
+        return departmentID;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentID(String departmentID) {
+        this.departmentID = departmentID;
     }
 
     public String getAssignedWorker() {

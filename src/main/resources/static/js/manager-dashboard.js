@@ -8,7 +8,7 @@
 let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 let allServices = [];
 let currentEditService = null;
-let currentDepartmentId = null; // Will be set by loadManagerDepartment()
+let departmentId = null; // Will be set by loadManagerDepartment()
 
 // Load services when page loads
 document.addEventListener('DOMContentLoaded', async () => {
@@ -48,9 +48,10 @@ async function loadManagerDepartment() {
         const response = await fetch(`/api/departments/${currentUser.id}`);
         if (response.ok) {
             const department = await response.json();
+            console.log(department)
 
-            if (department && department.managerId === currentUser.id) {
-                console.log(`Loaded department: ${department.name} (ID: ${department.id})`);
+            if (department && department.managerID === currentUser.id) {
+                departmentId = department.id;
             } else {
                 console.error("No department found for this manager");
                 alert("Error: No department assigned to this manager.");
@@ -77,12 +78,12 @@ function scrollToSection(sectionId) {
 // Load services for the manager's department
 async function loadServices() {
     try {
-        if (!currentDepartmentId) {
+        if (!departmentId) {
             console.error("Department ID not set");
             return;
         }
 
-        const response = await fetch(`/api/depmanager/services/${currentDepartmentId}`);
+        const response = await fetch(`/api/depmanager/get-services/${departmentId}`);
         const services = await response.json();
 
         allServices = services;
