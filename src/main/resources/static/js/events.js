@@ -1,5 +1,6 @@
 const categoryFilter = document.getElementById("categoryFilter");
 const costFilter = document.getElementById("costFilter");
+const searchFilter = document.getElementById("searchFilter");
 const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
 const eventsGrid = document.getElementById("eventsGrid");
@@ -69,6 +70,7 @@ function createEventCard(event) {
 function filterEvents() {
     const category = categoryFilter.value;
     const cost = costFilter.value;
+    const searchTerm = searchFilter.value.trim().toLowerCase();
 
     let visibleEvents = eventCards.filter((eventCard) => {
         const matchesCategory =
@@ -77,7 +79,10 @@ function filterEvents() {
         const matchesCost =
             cost === "all" || eventCard.dataset.cost === cost;
 
-        return matchesCategory && matchesCost;
+        const matchesSearch =
+            searchTerm === "" || eventCard.textContent.toLowerCase().includes(searchTerm);
+
+        return matchesCategory && matchesCost && matchesSearch;
     });
 
     eventCards.forEach((eventCard) => {
@@ -95,6 +100,7 @@ function filterEvents() {
 function clearFilters() {
     categoryFilter.value = "all";
     costFilter.value = "all";
+    searchFilter.value = "";
 
     filterEvents();
 }
@@ -113,6 +119,7 @@ function handleRegisterClick() {
 
 categoryFilter.addEventListener("change", filterEvents);
 costFilter.addEventListener("change", filterEvents);
+searchFilter.addEventListener("input", filterEvents);
 clearFiltersBtn.addEventListener("click", clearFilters);
 
 // Load events when page loads

@@ -40,7 +40,7 @@ document.getElementById('serviceRequestForm').addEventListener('submit', async f
 
         if (response.ok) {
             // Show alert notification
-            alert('Service request sent successfully! Thank you for reporting this issue.');
+            // alert('Service request sent successfully! Thank you for reporting this issue.');
 
             // Hide form and show success message with action buttons
             form.style.display = 'none';
@@ -51,7 +51,6 @@ document.getElementById('serviceRequestForm').addEventListener('submit', async f
                     <p>Thank you for reporting this issue. Our team will review it shortly.</p>
                     <div class="success-actions">
                         <button class="action-button request-another" onclick="requestAnother()">Request Another Service</button>
-                        <a href="/index.html" class="action-button go-home">Go to Home Page</a>
                     </div>
                 </div>
             `;

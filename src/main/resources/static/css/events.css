@@ -53,8 +53,17 @@
 
 .filter-controls {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: fit-content(320px) repeat(4, minmax(0, 1fr));
     gap: 15px;
+}
+
+.filter-controls .filter-group:first-child {
+    width: fit-content;
+}
+
+#searchFilter {
+    width: 280px;
+    max-width: 100%;
 }
 
 .filter-group {
@@ -68,7 +77,8 @@
     font-weight: bold;
 }
 
-.filter-group select {
+.filter-group select,
+.filter-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #c7d0db;
