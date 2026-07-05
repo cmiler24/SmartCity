@@ -25,6 +25,57 @@
                     Create an account
                 </button>
             </p>
+
+            <!-- Test Accounts Section -->
+            <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; border-left: 4px solid #d97706;">
+                <button id="testAccountsToggle" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px;" aria-expanded="true" aria-controls="testAccountsContent">
+                    <span style="font-size: 14px; color: #333; font-weight: bold; flex: 1; text-align: left;">📋 Demo Test Accounts</span>
+                    <span id="toggleCaret" style="font-size: 14px; color: #d97706;">▼</span>
+                </button>
+
+                <div id="testAccountsContent" style="font-size: 12px; line-height: 1.8; color: #555;">
+                    <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #d97706;">Test User (All Roles)</strong><br>
+                        Email: test@smartcityhub.test<br>
+                        Password: test123
+                    </div>
+
+                    <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #d97706;">Alex Citizen</strong><br>
+                        Email: citizen@smartcityhub.test<br>
+                        Password: citizen123<br>
+                        <span style="font-size: 11px; color: #999;">Roles: Citizen, Admin, Manager</span>
+                    </div>
+
+                    <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #d97706;">Gina Guest</strong><br>
+                        Email: guest@smartcityhub.test<br>
+                        Password: guest123<br>
+                        <span style="font-size: 11px; color: #999;">Roles: Guest</span>
+                    </div>
+
+                    <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #d97706;">Adam Administrator</strong><br>
+                        Email: admin@smartcityhub.test<br>
+                        Password: admin123<br>
+                        <span style="font-size: 11px; color: #999;">Roles: City Administrator</span>
+                    </div>
+
+                    <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
+                        <strong style="color: #d97706;">Maya Manager</strong><br>
+                        Email: manager@smartcityhub.test<br>
+                        Password: manager123<br>
+                        <span style="font-size: 11px; color: #999;">Roles: Department Manager</span>
+                    </div>
+
+                    <div>
+                        <strong style="color: #d97706;">Will Worker</strong><br>
+                        Email: worker@smartcityhub.test<br>
+                        Password: worker123<br>
+                        <span style="font-size: 11px; color: #999;">Roles: Department Worker</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="signupPanel" class="auth-panel" hidden>
@@ -46,7 +97,7 @@
 
             <p class="auth-switch">
                 Already have an account?
-                <button type="button" class="auth-text-button">
+                <button type="button" class="auth-text-button" data-auth-tab="login">
                     Log in
                 </button>
             </p>

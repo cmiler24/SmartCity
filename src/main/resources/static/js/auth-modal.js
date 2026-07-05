@@ -50,10 +50,26 @@ function setAuthTab(tabName) {
     });
 }
 
+function toggleTestAccounts() {
+    const testAccountsContent = document.getElementById("testAccountsContent");
+    const testAccountsToggle = document.getElementById("testAccountsToggle");
+    const toggleCaret = document.getElementById("toggleCaret");
+
+    if (!testAccountsContent || !testAccountsToggle || !toggleCaret) {
+        return;
+    }
+
+    const isHidden = testAccountsContent.hidden;
+    testAccountsContent.hidden = !isHidden;
+    testAccountsToggle.setAttribute("aria-expanded", isHidden);
+    toggleCaret.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+}
+
 document.addEventListener("click", (event) => {
     const openButton = event.target.closest("[data-open-auth]");
     const closeButton = event.target.closest("[data-close-auth]");
     const tabButton = event.target.closest("[data-auth-tab]");
+    const testAccountsToggle = event.target.closest("#testAccountsToggle");
 
     if (openButton) {
         openAuthModal(openButton.dataset.openAuth);
@@ -65,6 +81,10 @@ document.addEventListener("click", (event) => {
 
     if (tabButton) {
         setAuthTab(tabButton.dataset.authTab);
+    }
+
+    if (testAccountsToggle) {
+        toggleTestAccounts();
     }
 
     if (event.target.id === "authModal") {
