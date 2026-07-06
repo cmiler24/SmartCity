@@ -116,38 +116,71 @@ async function handleRegisterClick(e) {
 
         // check that e.target card === to one of the events in const envents
         const targetEvent = e.target.closest(".event-card").dataset;
-
-        //
         const eventToRegister = events.find(event => event.title === targetEvent.title && event.eventType.toLowerCase().replace(/\s+/g, "-") === targetEvent.category && event.location.toLowerCase().replace(/\s+/g, "-") === targetEvent.location.toLowerCase() && (event.free ? "free" : "paid") === targetEvent.cost);
 
-        // post eventToRegister id and id of currentUser to backend
-        try {
-            const response = await fetch("/api/event-registrations/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    userId: currentUser.id,
-                    eventId: eventToRegister.id
-                })
-            });
+        // if already registered, delete user registration
 
-            if (response.ok) {
-                alert("Successfully registered for the event!");
-                // change register event button to "Registered" and disable it
-                e.target.textContent !== "Registered" ? e.target.textContent = "Registered" : "Register";
-                e.target.style.backgroundColor = "#4CAF50";
-                e.target.style.color = "white";
-                e.target.disabled = true;
-            } else {
-                alert("Failed to register for the event. Please try again.");
+        if (e.target.textContent === "Registered") {
+            // TODO: Delete user registration
+            try {
+                const response = await fetch("/api/event-registrations/unregister", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId: currentUser.id,
+                        eventId: eventToRegister.id
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Successfully unregistered from the event!");
+                    e.target.textContent = "Register";
+                    e.target.style.backgroundColor = "";
+                    e.target.style.color = "";
+                    // e.target.disabled = false;
+                } else {
+                    alert("Failed to unregister from the event. Please try again.");
+                }
+
+                return;
+            } catch (error) {
+                console.error("Error unregistering from event:", error);
+                alert("An error occurred while unregistering from the event. Please try again later.");
             }
+        }
 
-            return;
-        } catch (error) {
-            console.error("Error registering for event:", error);
-            alert("An error occurred while registering for the event. Please try again later.");
+        if (e.target.textContent === "Register") {
+            // post eventToRegister id and id of currentUser to backend
+            try {
+                const response = await fetch("/api/event-registrations/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        userId: currentUser.id,
+                        eventId: eventToRegister.id
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Successfully registered for the event!");
+                    // change register event button to "Registered" and disable it
+                    e.target.textContent !== "Registered" ? e.target.textContent = "Registered" : "Register";
+                    e.target.style.backgroundColor = "#4CAF50";
+                    e.target.style.color = "white";
+                    // e.target.disabled = true;
+                } else {
+                    alert("Failed to register for the event. Please try again.");
+                }
+
+                return;
+            } catch (error) {
+                console.error("Error registering for event:", error);
+                alert("An error occurred while registering for the event. Please try again later.");
+            }
         }
         openAuthModal();
     }

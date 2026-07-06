@@ -35,5 +35,21 @@ public class EventRegistrationController {
         eventRegistrationRepository.save(eventRegistration);
         return true;
     }
+
+    @DeleteMapping("/unregister")
+    public boolean unregisterEventRegistration(@RequestBody EventRegistrationDTO eventRegistrationDTO) {
+        EventRegistration eventRegistration = eventRegistrationRepository.findByEventIdAndUserId(
+                eventRegistrationDTO.getEventId(),
+                eventRegistrationDTO.getUserId()
+        );
+
+        if (eventRegistration != null) {
+            System.out.println("Unregistering event: ");
+            eventRegistrationRepository.delete(eventRegistration);
+            return true;
+        }
+
+        return false;
+    }
 }
 
