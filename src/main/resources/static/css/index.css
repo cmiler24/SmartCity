@@ -67,7 +67,35 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 20px;
+}
+
+.announcement-filter-controls {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.announcement-filter-btn {
+    background-color: #e7eef6;
+    color: #1f4e79;
+    border: 1px solid #c7d6e6;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.announcement-filter-btn.active {
+    background-color: #1f4e79;
+    color: #fff;
+    border-color: #1f4e79;
+}
+
+.announcement-filter-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .section-heading h2 {
