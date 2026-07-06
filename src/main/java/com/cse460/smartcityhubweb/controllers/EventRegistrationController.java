@@ -44,7 +44,6 @@ public class EventRegistrationController {
         );
 
         if (eventRegistration != null) {
-            System.out.println("Unregistering event: ");
             eventRegistrationRepository.delete(eventRegistration);
             return true;
         }

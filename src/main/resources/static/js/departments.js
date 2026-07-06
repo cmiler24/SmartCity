@@ -58,8 +58,6 @@ async function loadDepartments() {
     }
 }
 
-// TODO: Implement loadUserSubscriptions from backend
-// This should fetch user's subscribed departments from database
 async function loadUserSubscriptions() {
     if (!currentUser) {
         userSubscriptions = [];
@@ -67,16 +65,21 @@ async function loadUserSubscriptions() {
     }
 
     try {
-        // TODO: Create endpoint /api/departments/user/{userId}
-        // const response = await fetch(`/api/departments/user/${currentUser.id}`);
-        // const subscriptions = await response.json();
-        // userSubscriptions = subscriptions;
+        const response = await fetch(`/api/department-subscriptions/${currentUser.id}`);
 
-        // For now, using localStorage
-        const stored = localStorage.getItem(`userSubscriptions_${currentUser.id}`);
-        userSubscriptions = stored ? JSON.parse(stored) : [];
+        if (!response.ok) {
+            console.error('Failed to load subscriptions');
+            userSubscriptions = [];
+            return;
+        }
+
+        const subscriptions = await response.json();
+        userSubscriptions = subscriptions
+            .filter(sub => sub.userId === currentUser.id)
+            .map(sub => sub.departmentId);
     } catch (error) {
         console.error('Error loading user subscriptions:', error);
+        userSubscriptions = [];
     }
 }
 
@@ -158,7 +161,6 @@ function createDepartmentCard(dept, isSubscribed) {
     return card;
 }
 
-// TODO: Implement subscribeToDepartment with observer notification
 async function subscribeToDepartment(departmentId) {
     if (!currentUser) {
         alert('Please log in to subscribe to departments.');
@@ -166,34 +168,33 @@ async function subscribeToDepartment(departmentId) {
     }
 
     try {
-        // TODO: Call backend endpoint POST /api/departments/subscribe
-        // const response = await fetch('/api/departments/subscribe', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         userId: currentUser.id,
-        //         departmentId: departmentId
-        //     })
-        // });
+        const response = await fetch('/api/department-subscriptions/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: currentUser.id,
+                departmentId: departmentId
+            })
+        });
 
-        // For now, using localStorage
+        if (!response.ok) {
+            alert('Failed to subscribe to department');
+            return;
+        }
+
         if (!userSubscriptions.includes(departmentId)) {
             userSubscriptions.push(departmentId);
-            localStorage.setItem(`userSubscriptions_${currentUser.id}`, JSON.stringify(userSubscriptions));
-
-            displayUserSubscriptions();
-            displayAllDepartments();
-
-            // TODO: Trigger notification to user about successful subscription
-            alert('Successfully subscribed to department');
         }
+
+        displayUserSubscriptions();
+        displayAllDepartments();
+        alert('Successfully subscribed to department');
     } catch (error) {
         console.error('Error subscribing to department:', error);
         alert('Failed to subscribe to department');
     }
 }
 
-// TODO: Implement unsubscribeFromDepartment with observer removal
 async function unsubscribeFromDepartment(departmentId) {
     if (!currentUser) {
         alert('Please log in.');
@@ -201,24 +202,24 @@ async function unsubscribeFromDepartment(departmentId) {
     }
 
     try {
-        // TODO: Call backend endpoint POST /api/departments/unsubscribe
-        // const response = await fetch('/api/departments/unsubscribe', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         userId: currentUser.id,
-        //         departmentId: departmentId
-        //     })
-        // });
+        const response = await fetch('/api/department-subscriptions/unsubscribe', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: currentUser.id,
+                departmentId: departmentId
+            })
+        });
 
-        // For now, using localStorage
+        if (!response.ok) {
+            alert('Failed to unsubscribe from department');
+            return;
+        }
+
         userSubscriptions = userSubscriptions.filter(id => id !== departmentId);
-        localStorage.setItem(`userSubscriptions_${currentUser.id}`, JSON.stringify(userSubscriptions));
 
         displayUserSubscriptions();
         displayAllDepartments();
-
-        // TODO: Trigger notification to user about successful unsubscription
         alert('Successfully unsubscribed from department');
     } catch (error) {
         console.error('Error unsubscribing from department:', error);
@@ -293,15 +294,4 @@ window.addEventListener('storage', (event) => {
         location.reload();
     }
 });
-
-// TODO: Implement real-time notifications
-// When subscribed department creates event, notify user
-// This would use WebSocket or Server-Sent Events (SSE)
-// function subscribeToNotifications() {
-//     const eventSource = new EventSource(`/api/notifications?userId=${currentUser.id}`);
-//     eventSource.onmessage = (event) => {
-//         const notification = JSON.parse(event.data);
-//         // TODO: Display notification to user
-//     };
-// }
 
