@@ -57,6 +57,9 @@ function ensureAnnouncementFilterControls() {
     subscribedButton.addEventListener("click", () => {
         const currentUser = getCurrentUser();
         if (!currentUser || !currentUser.id) {
+            if (typeof openAuthModal === "function") {
+                openAuthModal("login");
+            }
             return;
         }
 
@@ -82,8 +85,9 @@ function updateAnnouncementFilterControls(currentUser) {
     }
 
     const isLoggedIn = !!(currentUser && currentUser.id);
-    subscribedButton.disabled = !isLoggedIn;
+    subscribedButton.disabled = false;
     subscribedButton.title = isLoggedIn ? "" : "Log in to view subscribed announcements";
+    subscribedButton.classList.toggle("login-required", !isLoggedIn);
 
     subscribedButton.classList.toggle("active", currentAnnouncementView === "subscribed" && isLoggedIn);
     allButton.classList.toggle("active", currentAnnouncementView === "all" || !isLoggedIn);

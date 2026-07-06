@@ -5,11 +5,13 @@ import com.cse460.smartcityhubweb.model.Department;
 import com.cse460.smartcityhubweb.model.Event;
 import com.cse460.smartcityhubweb.model.Service;
 import com.cse460.smartcityhubweb.model.User;
+import com.cse460.smartcityhubweb.model.DepartmentSubscription;
 import com.cse460.smartcityhubweb.repository.AnnouncementRepository;
 import com.cse460.smartcityhubweb.repository.DepartmentRepository;
 import com.cse460.smartcityhubweb.repository.EventRepository;
 import com.cse460.smartcityhubweb.repository.ServiceRepository;
 import com.cse460.smartcityhubweb.repository.UserRepository;
+import com.cse460.smartcityhubweb.repository.DepartmentSubscriptionRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -25,19 +27,22 @@ public class DemoDataLoader {
     private final AnnouncementRepository announcementRepository;
     private final DepartmentRepository departmentRepository;
     private final ServiceRepository serviceRepository;
+    private final DepartmentSubscriptionRepository departmentSubscriptionRepository;
 
-    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository, AnnouncementRepository announcementRepository, DepartmentRepository departmentRepository, ServiceRepository serviceRepository) {
+    public DemoDataLoader(UserRepository userRepository, EventRepository eventRepository, AnnouncementRepository announcementRepository, DepartmentRepository departmentRepository, ServiceRepository serviceRepository, DepartmentSubscriptionRepository departmentSubscriptionRepository) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.announcementRepository = announcementRepository;
         this.departmentRepository = departmentRepository;
         this.serviceRepository = serviceRepository;
+        this.departmentSubscriptionRepository = departmentSubscriptionRepository;
     }
 
     @PostConstruct
     public void loadDemoData() {
         loadDemoUsers();
         loadDemoDepartments();
+        loadDemoDepartmentSubscriptions();
         loadDemoEvents();
         loadDemoAnnouncements();
         loadDemoServices();
@@ -87,6 +92,30 @@ public class DemoDataLoader {
                 "worker123"
         );
 
+        User worker2 = new User(
+                "user-006",
+                "Sara Support",
+                "sara.worker@smartcityhub.test",
+                java.util.Arrays.asList("DEPARTMENT_WORKER"),
+                "worker123"
+        );
+
+        User worker3 = new User(
+                "user-007",
+                "David Dispatcher",
+                "david.worker@smartcityhub.test",
+                java.util.Arrays.asList("DEPARTMENT_WORKER"),
+                "worker123"
+        );
+
+        User worker4 = new User(
+                "user-008",
+                "Patricia Planner",
+                "patricia.worker@smartcityhub.test",
+                java.util.Arrays.asList("DEPARTMENT_WORKER"),
+                "worker123"
+        );
+
         User testUser = new User(
                 "user-test",
                 "Test User (All Roles)",
@@ -105,6 +134,9 @@ public class DemoDataLoader {
                 admin,
                 manager,
                 worker,
+                worker2,
+                worker3,
+                worker4,
                 testUser
         };
 
@@ -414,5 +446,47 @@ public class DemoDataLoader {
         };
 
         departmentRepository.saveAll(Arrays.asList(demoDepartments));
+    }
+
+    private void loadDemoDepartmentSubscriptions() {
+        DepartmentSubscription[] subscriptions = {
+                // Citizen subscribes to Parks and Recreation and Public Safety
+                new DepartmentSubscription("sub-001", "dept-001", "user-001"),
+                new DepartmentSubscription("sub-002", "dept-002", "user-001"),
+
+                // Guest subscribes to Public Works
+                new DepartmentSubscription("sub-003", "dept-003", "user-002"),
+
+                // Admin subscribes to City Planning
+                new DepartmentSubscription("sub-004", "dept-004", "user-003"),
+
+                // Manager subscribes to all departments
+                new DepartmentSubscription("sub-005", "dept-001", "user-004"),
+                new DepartmentSubscription("sub-006", "dept-002", "user-004"),
+                new DepartmentSubscription("sub-007", "dept-003", "user-004"),
+                new DepartmentSubscription("sub-008", "dept-004", "user-004"),
+                new DepartmentSubscription("sub-009", "dept-005", "user-004"),
+
+                // Worker 1 subscribes to Parks and Recreation
+                new DepartmentSubscription("sub-010", "dept-001", "user-005"),
+
+                // Worker 2 subscribes to Public Works
+                new DepartmentSubscription("sub-011", "dept-003", "user-006"),
+
+                // Worker 3 subscribes to Public Safety
+                new DepartmentSubscription("sub-012", "dept-002", "user-007"),
+
+                // Worker 4 subscribes to Education and Community Service
+                new DepartmentSubscription("sub-013", "dept-005", "user-008"),
+
+                // Test User subscribes to all departments
+                new DepartmentSubscription("sub-014", "dept-001", "user-test"),
+                new DepartmentSubscription("sub-015", "dept-002", "user-test"),
+                new DepartmentSubscription("sub-016", "dept-003", "user-test"),
+                new DepartmentSubscription("sub-017", "dept-004", "user-test"),
+                new DepartmentSubscription("sub-018", "dept-005", "user-test")
+        };
+
+        departmentSubscriptionRepository.saveAll(Arrays.asList(subscriptions));
     }
 }
