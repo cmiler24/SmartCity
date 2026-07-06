@@ -6,13 +6,14 @@ const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 const eventsGrid = document.getElementById("eventsGrid");
 const eventCount = document.getElementById("eventCount");
 const noResults = document.getElementById("noResults");
+let events = [];
 
 let eventCards = [];
 
 async function loadEvents() {
     try {
         const response = await fetch("/api/events");
-        const events = await response.json();
+        events = await response.json();
 
         eventsGrid.innerHTML = "";
         eventCards = [];
@@ -33,6 +34,7 @@ async function loadEvents() {
 function createEventCard(event) {
     const article = document.createElement("article");
     article.className = "event-card";
+    article.setAttribute("data-title", event.title)
     article.setAttribute("data-category", event.eventType.toLowerCase().replace(/\s+/g, "-"));
     article.setAttribute("data-location", event.location.toLowerCase().replace(/\s+/g, "-"));
     article.setAttribute("data-cost", event.free ? "free" : "paid");
@@ -62,7 +64,7 @@ function createEventCard(event) {
     `;
 
     const registerButton = article.querySelector(".register-button");
-    registerButton.addEventListener("click", handleRegisterClick);
+    registerButton.addEventListener("click", (e) => handleRegisterClick(e));
 
     return article;
 }
@@ -105,16 +107,50 @@ function clearFilters() {
     filterEvents();
 }
 
-function handleRegisterClick() {
+async function handleRegisterClick(e) {
     const currentUser = localStorage.getItem("currentUser");
 
     if (currentUser) {
         // TODO: Complete event registration functionality for logged-in users
         console.log("TODO: Handle event registration for logged-in user");
-        return;
-    }
 
-    openAuthModal();
+        // check that e.target card === to one of the events in const envents
+        const targetEvent = e.target.closest(".event-card").dataset;
+
+        //
+        const eventToRegister = events.find(event => event.title === targetEvent.title && event.eventType.toLowerCase().replace(/\s+/g, "-") === targetEvent.category && event.location.toLowerCase().replace(/\s+/g, "-") === targetEvent.location.toLowerCase() && (event.free ? "free" : "paid") === targetEvent.cost);
+
+        // post eventToRegister id and id of currentUser to backend
+        try {
+            const response = await fetch("/api/event-registrations/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: currentUser.id,
+                    eventId: eventToRegister.id
+                })
+            });
+
+            if (response.ok) {
+                alert("Successfully registered for the event!");
+                // change register event button to "Registered" and disable it
+                e.target.textContent !== "Registered" ? e.target.textContent = "Registered" : "Register";
+                e.target.style.backgroundColor = "#4CAF50";
+                e.target.style.color = "white";
+                e.target.disabled = true;
+            } else {
+                alert("Failed to register for the event. Please try again.");
+            }
+
+            return;
+        } catch (error) {
+            console.error("Error registering for event:", error);
+            alert("An error occurred while registering for the event. Please try again later.");
+        }
+        openAuthModal();
+    }
 }
 
 categoryFilter.addEventListener("change", filterEvents);

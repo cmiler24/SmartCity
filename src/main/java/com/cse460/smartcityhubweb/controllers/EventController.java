@@ -23,4 +23,5 @@ import java.util.List;
         public List<Event> getAllEvents() {
             return eventRepository.findAll();
         }
-}
+
+    }
