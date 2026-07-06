@@ -132,16 +132,11 @@ function createDepartmentCard(dept, isSubscribed) {
     const card = document.createElement('div');
     card.className = 'department-card';
 
-    const statusClass = dept.status === 'Active' ? '' : 'inactive';
-
     card.innerHTML = `
         <div class="department-card-header">
             <div class="department-card-title">
                 <h3>${dept.name}</h3>
             </div>
-            <span class="department-status-badge ${statusClass}">
-                ${dept.status}
-            </span>
         </div>
 
         <div class="department-card-info">

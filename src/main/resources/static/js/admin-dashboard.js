@@ -87,7 +87,9 @@ let currentEditAnnouncement = null;
 function openEditAnnouncementModal(announcement) {
     currentEditAnnouncement = announcement;
     document.getElementById("editAnnouncementType").value = announcement.type;
-    document.getElementById("editAnnouncementDepartment").value = announcement.department;
+    const editDepartmentSelect = document.getElementById("editAnnouncementDepartment");
+    ensureDepartmentOption(editDepartmentSelect, announcement.department);
+    editDepartmentSelect.value = announcement.department;
     document.getElementById("editAnnouncementTitle").value = announcement.title;
     document.getElementById("editAnnouncementDescription").value = announcement.description;
 
@@ -113,6 +115,51 @@ function closeEditAnnouncementModalOnBackdrop(event) {
 let currentDeleteType = null;
 let allEvents = [];
 let allAnnouncements = [];
+let allDepartments = [];
+
+async function loadDepartmentsForAnnouncementForms() {
+    try {
+        const response = await fetch("/api/departments");
+        if (!response.ok) {
+            console.error(`Failed to load departments: ${response.status}`);
+            return;
+        }
+
+        allDepartments = await response.json();
+        populateAnnouncementDepartmentSelects();
+    } catch (error) {
+        console.error("Error loading departments:", error);
+    }
+}
+
+function populateAnnouncementDepartmentSelects() {
+    const createSelect = document.getElementById("announcementDepartment");
+    const editSelect = document.getElementById("editAnnouncementDepartment");
+
+    [createSelect, editSelect].forEach((selectElement) => {
+        if (!selectElement) return;
+
+        selectElement.innerHTML = '<option value="">Select a department</option>';
+        allDepartments.forEach((department) => {
+            const option = document.createElement("option");
+            option.value = department.name;
+            option.textContent = department.name;
+            selectElement.appendChild(option);
+        });
+    });
+}
+
+function ensureDepartmentOption(selectElement, departmentName) {
+    if (!selectElement || !departmentName) return;
+
+    const optionExists = Array.from(selectElement.options).some((option) => option.value === departmentName);
+    if (!optionExists) {
+        const option = document.createElement("option");
+        option.value = departmentName;
+        option.textContent = departmentName;
+        selectElement.appendChild(option);
+    }
+}
 
 function openDeleteEventModal() {
     currentDeleteType = "event";
@@ -443,7 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
         editAnnouncementForm.addEventListener("submit", handleEditAnnouncement);
     }
 
-    // Load data
+    // Load form options and data
+    loadDepartmentsForAnnouncementForms();
     loadAdminData();
 
     // Close modals on Escape key
