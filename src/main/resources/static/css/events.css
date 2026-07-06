@@ -248,7 +248,7 @@
 }
 
 .active-link {
-    text-decoration: underline !important;
+    text-decoration: none !important;
 }
 
 @media (max-width: 950px) {

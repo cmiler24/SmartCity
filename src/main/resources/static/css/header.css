@@ -1,13 +1,24 @@
 header {
     background-color: #1f4e79;
     color: white;
-    padding: 20px;
+    padding: 40px 20px;
     text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 50px;
-    margin-top: 0px;
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-content h1 {
+    margin: 0;
 }
 
 nav {
@@ -26,11 +37,13 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #f59e0b;
+    text-decoration: none;
 }
 
 .user-welcome {
-    /*align-items: center;*/
-    text-align: center;
-    /*gap: 10px;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

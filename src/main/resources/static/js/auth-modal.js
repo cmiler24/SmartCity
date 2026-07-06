@@ -8,7 +8,7 @@ function loginBtnClick() {
     }
 }
 
-function openAuthModal() {
+function openAuthModal(tabName = "login") {
     const authModal = document.getElementById("authModal");
 
     if (!authModal) {

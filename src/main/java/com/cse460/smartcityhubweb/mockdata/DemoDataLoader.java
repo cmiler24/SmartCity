@@ -56,8 +56,6 @@ public class DemoDataLoader {
                 java.util.Arrays.asList("CITIZEN"),
                 "citizen123"
         );
-        citizen.addRole("CITY_ADMINISTRATOR");
-        citizen.addRole("DEPARTMENT_MANAGER");
 
         User guest = new User(
                 "user-002",

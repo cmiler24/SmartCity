@@ -49,6 +49,7 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     color: black !important;
+    text-decoration: none;
 }
 
 .card:hover {
@@ -115,7 +116,20 @@ button:hover {
 }
 
 .section-heading a:hover {
-    /*text-decoration: underline;*/
+    color: #f59e0b;
+    text-decoration: none;
+}
+
+.cards a,
+.alerts-section a,
+.card a {
+    text-decoration: none;
+}
+
+.cards a:hover,
+.alerts-section a:hover,
+.card a:hover {
+    color: #f59e0b;
 }
 
 .alerts-list {
